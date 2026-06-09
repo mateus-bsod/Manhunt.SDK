@@ -1,4 +1,4 @@
-#include "../framework.h"
+#include "../../framework.h"
 #include "CWeapons.h"
 
 
@@ -38,4 +38,30 @@ void InstallWeaponHook()
 
     oWeaponParse =
         g_WeaponParseHook.original<tWeaponParse>();
+}
+
+namespace CWeapon
+{
+    // void SetOneHitKill(bool enabled)
+    // {
+    //     CWeaponInfo* pWeapon = (CWeaponInfo*)0x6AB5CC;
+    //     if (enabled)
+    //     {
+    //         pWeapon->fMaxFireRange = 1000.0f;
+    //         pWeapon->nClipAmmo = 999;
+    //         pWeapon->nMaxShots = 999;
+    //     }
+    //     else
+    //     {
+    //         pWeapon->fMaxFireRange = 100.0f; // Valor original aproximado
+    //         pWeapon->nClipAmmo = 30;          // Valor original aproximado
+    //         pWeapon->nMaxShots = 120;        // Valor original aproximado
+    //     }
+    // }
+
+    int GetCurrentWeapon()
+    {
+        int weaponid = *reinterpret_cast<int*>(0x4C5A90);
+        return weaponid;
+    }
 }

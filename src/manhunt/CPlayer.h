@@ -1038,6 +1038,13 @@ namespace CPlayer
 
     void SetPlayerFogColor(DWORD color);
 	DWORD GetPlayerFogColor();
+
+	void TogglePlayerHud(bool toggle);
+	bool IsPlayerHudEnabled();
+ 
+    void OpenSubMenu(int menu);
+
+    Player* GetPlayer();
 }
 
 void InstallPlayerHooks();

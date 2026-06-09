@@ -1,11 +1,12 @@
 
 #include "../framework.h"
 
-#include "CPhysics.h"
-#include "CCollectable.h"
-#include "CInventory.h"
-#include "CWeapons.h"
-#include "CPlayer.h"
+#include "manhunt/CPhysics.h"
+#include "manhunt/CCollectable.h"
+#include "manhunt/CInventory.h"
+#include "manhunt/CWeapons.h"
+#include "manhunt/CPlayer.h"
+#include "manhunt/CInventory.h"
 
 
 typedef void(__cdecl* tPrint)(void* logger, const char* text);
@@ -46,4 +47,5 @@ void InitHooks()
     InstallWeaponHook();
     InstallPlayerHooks();
     InstallPhysicsHook();
+    InstallInventoryHook();
 }

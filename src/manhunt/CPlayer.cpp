@@ -1,4 +1,4 @@
-#include "../framework.h"
+#include "../../framework.h"
 #include "CPlayer.h"
 //
 
@@ -77,6 +77,33 @@ namespace CPlayer
         DWORD& gFogColor = *reinterpret_cast<DWORD*>(0x715BB8);
         return gFogColor;
 	}
+
+    Player* GetPlayer()
+    {
+        DWORD addr = *(DWORD*)0x715B9C;
+        if (!addr) return nullptr;
+
+        return (Player*)addr;
+    }
+
+    void TogglePlayerHud(bool toggle)
+    {
+        DWORD& gPlayerHud = *reinterpret_cast<DWORD*>(0x7CF0A0);
+		gPlayerHud = toggle ? 1 : 0;
+    }
+
+    bool IsPlayerHudEnabled()
+    {
+        DWORD& gPlayerHud = *reinterpret_cast<DWORD*>(0x7CF0A0);
+		return gPlayerHud != 0;
+    }
+
+    void OpenSubMenu(int menu)
+    {
+        typedef void(__thiscall* tOpenSub)(int menu);
+        tOpenSub Open_SubMenu = (tOpenSub)0x5D7A40;
+		Open_SubMenu(menu);
+    }
 }
 
 void InstallPlayerHooks()
@@ -88,3 +115,4 @@ void InstallPlayerHooks()
     oForcedPlayAnim =
         g_ForcedPlayAnimHook.original<tForcedAnim>();
 }
+
