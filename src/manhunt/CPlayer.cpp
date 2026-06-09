@@ -78,6 +78,13 @@ namespace CPlayer
         return gFogColor;
 	}
 
+    int GetPlayerBase()
+    {
+        DWORD addr = *(DWORD*)0x715B9C;
+        if (!addr) return 0;
+		return addr;
+    }
+
     Player* GetPlayer()
     {
         DWORD addr = *(DWORD*)0x715B9C;
@@ -85,6 +92,7 @@ namespace CPlayer
 
         return (Player*)addr;
     }
+
 
     void TogglePlayerHud(bool toggle)
     {

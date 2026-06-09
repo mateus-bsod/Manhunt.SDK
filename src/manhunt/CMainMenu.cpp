@@ -57,6 +57,7 @@ namespace CMainMenu
 {
     void* __cdecl hkMainMenu()
     {
+
         int v0 = *(int*)0x7C8720;
         float v1 = *(float*)0x7C8724;
         float v2 = *(float*)0x7C8728;
@@ -124,11 +125,14 @@ namespace CMainMenu
             oPrintCheat(cheatText, (void*)0x7D6360, (void*)0x7D6360, (void*)0x7D6360);
         }
 
+
         return (void*)0x7D6360;
     }
 
-    // --------------------------------------------------------------------------------
-    // Pause Menu Handler Hook (0x601010)
+    //
+
+
+
     // --------------------------------------------------------------------------------
 
     signed int hkPauseMenuHandler()
@@ -138,9 +142,6 @@ namespace CMainMenu
     }
 
     // --------------------------------------------------------------------------------
-    // Main SubMenu Handler Hook (0x5FFB50)
-    // --------------------------------------------------------------------------------
-
 
     signed int hkMainSubMenuHandler(void* thisPtr)
     {
@@ -224,8 +225,6 @@ namespace CMainMenu
         return 1;
     }
 
-    // --------------------------------------------------------------------------------
-    // Install Hooks
     // --------------------------------------------------------------------------------
 
     void InstallHook()

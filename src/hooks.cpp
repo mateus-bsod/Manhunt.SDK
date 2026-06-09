@@ -7,7 +7,9 @@
 #include "manhunt/CWeapons.h"
 #include "manhunt/CPlayer.h"
 #include "manhunt/CInventory.h"
+#include "manhunt/CLoadGameWorld.h"
 #include "manhunt/CMenu.h"
+#include "manhunt/CInput.h"
 #include "manhunt/CMainMenu.h"
 
 
@@ -52,4 +54,7 @@ void InitHooks()
     CInventory::InstallHook();
     CMenu::InstallHook();
     CMainMenu::InstallHook();
+    //CLoadGameWorld::InstallHook();
+    CVisual::InstallHook();
+    CInput::InstallHook();
 }

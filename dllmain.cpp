@@ -5,8 +5,11 @@
 
 
 #include "src/manhunt/CPlayer.h"
+#include "src/manhunt/CText.h"
+#include "src/manhunt/CMainMenu.h"
 #include "src/manhunt/CWeapons.h"
 #include "src/manhunt/CVisual.h"    
+#include "src/manhunt/CInput.h"    
 
 #include "./src/hooks.h"
 
@@ -32,18 +35,33 @@ void InitConsole()
 #endif
 }
 
-typedef void(__cdecl* tDrawString)(wchar_t* text, float x, float y, float scaleX, float scaleY);
-tDrawString oDrawString = (tDrawString)0x5D5B30;
+typedef void(__thiscall* ttttasmdinasd)(void* text, float x, float y, int alignX, int alignY, int color, int flag);
+ttttasmdinasd sub_5E5980 = (ttttasmdinasd)0x5E5980;
+
+void MeuCallback(int button)
+{
+    if (button == 1)
+        CVisual::GameText("Nao");
+    else
+        CVisual::GameText("Obvio que nao!");
+}
+
 
 DWORD WINAPI MainThread(LPVOID)
 {
 	InitConsole();
 	InitHooks();
 
- 
-    typedef void(__thiscall* tOpenSub)(int menu);
-    tOpenSub Open_SubMenu = (tOpenSub)0x5D7A40;
-    
+
+    CVisual::ShowDialogBoxEx(
+        CText::KeyEx("Você tem certeza?"),
+        CText::KeyEx("Não"),
+        CText::KeyEx("Obvio que nao"),
+        MeuCallback
+    );
+
+
+
 
     return 0;
 }
@@ -67,6 +85,10 @@ BOOL APIENTRY DllMain(
 
             nullptr
         );
+    }
+	if (reason == DLL_PROCESS_DETACH)
+    {
+        CInput::Shutdown();
     }
 
     return TRUE;

@@ -5,9 +5,9 @@
 
 typedef signed int(__thiscall* tPauseMenuControl)(void* pThis);
 typedef void(__thiscall* tDrawText)(void* text1, void* text2, void* text3, int a, int b);
+tDrawText oDrawText = nullptr;
 
 tPauseMenuControl oPauseMenuControl = nullptr;
-tDrawText oDrawText = nullptr;
 SafetyHookInline g_PauseMenuHook;
 
 std::vector<MenuItem> customMenu;

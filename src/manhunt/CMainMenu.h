@@ -19,6 +19,13 @@
 extern SafetyHookInline g_MainMenuHook;
 extern SafetyHookInline g_PauseMenuHandlerHook;
 
+extern int& menuActive;
+extern int& currentSubMenuId;
+extern int& menuState;
+extern int& lastSelectedItem;
+extern int& selectedItemIndex;
+extern int& selectedOption ;
+
 namespace CMainMenu
 {
 	void* __cdecl hkMainMenu();

@@ -1049,6 +1049,8 @@ namespace CPlayer
     void AccumulateTime();
 
     Player* GetPlayer();
+    int GetPlayerBase();
+
     void InstallHook();
 }
 

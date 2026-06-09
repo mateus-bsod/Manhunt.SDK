@@ -1,30 +1,33 @@
 #include "CInput.h"
 
+
 namespace CInput
 {
-	bool IsUpKeyPressed()
+	bool g_DialogThreadRunning = true;
+
+	int IsUpKeyPressed()
 	{
-		return CallAndReturn<bool, 0x5D8A10>();
+		return CallAndReturn<int, 0x5D8A10>();
 	}
 
-	bool IsDownKeyPressed()
+	int IsDownKeyPressed()
 	{
-		return CallAndReturn<bool, 0x5D8AA0>();
+		return CallAndReturn<int, 0x5D8AA0>();
 	}
 
-	bool IsConfirmKeyPressed()
+	int IsConfirmKeyPressed()
 	{
-		return CallAndReturn<bool, 0x5DACC0>();
+		return CallAndReturn<int, 0x5DACC0>();
 	}
 
-	bool IsActionKeyPressed()
+	int IsActionKeyPressed()
 	{
-		return CallAndReturn<bool, 0x5D8B30>();
+		return CallAndReturn<int, 0x5D8B30>();
 	}
 
-	bool IsExitKeyPressed()
+	int IsExitKeyPressed()
 	{
-		return CallAndReturn<bool, 0x5D8C60>();
+		return CallAndReturn<int, 0x5D8C60>();
 	}
 
 	int IsKeyReleased()
@@ -55,5 +58,36 @@ namespace CInput
 	void ResetMenuState()
 	{
 		Call<0x5EF820>();
+	}
+
+	// ----------------------------------------------------------------------------------------------
+
+	void DialogThreadFunc()
+	{
+		while (g_DialogThreadRunning)
+		{
+			if (InDialogBox && VisibleDialog)
+			{
+				if ((GetAsyncKeyState(VK_RETURN) & 1) || (GetAsyncKeyState(VK_SPACE) & 1) || (GetAsyncKeyState(VK_LBUTTON) & 1))
+				{
+					CVisual::UpdateDialogBox();
+				}
+			}
+
+			std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		}
+	}
+
+	// ----------------------------------------------------------------------------------------------
+
+	void InstallHook()
+	{
+		std::thread dialogThread(DialogThreadFunc);
+		dialogThread.detach();
+	}
+
+	void Shutdown()
+	{
+		g_DialogThreadRunning = false;
 	}
 }

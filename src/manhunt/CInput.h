@@ -1,15 +1,16 @@
 #pragma once
 
 #include "../../framework.h"
+#include "CVisual.h"
 #include "../game.sdk.h"
 
 namespace CInput
 {
-	bool IsUpKeyPressed();
-	bool IsDownKeyPressed();
-	bool IsConfirmKeyPressed();
-	bool IsActionKeyPressed();
-	bool IsExitKeyPressed();
+	int IsUpKeyPressed();
+	int IsDownKeyPressed();
+	int IsConfirmKeyPressed();
+	int IsActionKeyPressed();
+	int IsExitKeyPressed();
 	int IsKeyReleased();
 	bool IsUsingMouse();
 	void* GetLocalizedString(void* pStringId);
@@ -17,4 +18,7 @@ namespace CInput
 	int GetSelectedOptionFromMouse();
 	void HealPlayer(void* pPlayer);
 	void ResetMenuState();
+	void InstallHook();
+	void Shutdown();
+	void CheckDialogInput();
 }

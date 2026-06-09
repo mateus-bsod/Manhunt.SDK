@@ -12,4 +12,8 @@
 #include <string>
 #include <cstdarg>
 
+// CInput
+#include <thread>
+#include <chrono>
+
 #include "lib/safetyhook.hpp"
