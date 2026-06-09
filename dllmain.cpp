@@ -1,5 +1,5 @@
 
-#define DEBUG_CONSOLE false
+#define DEBUG_CONSOLE true
 
 #include "framework.h"
 
@@ -26,27 +26,24 @@ void InitConsole()
     freopen_s(&fp, "CONIN$", "r", stdin);
 
     SetConsoleTitleA("Manhunt Debug Console");
+
+    HWND hConsole = GetConsoleWindow();
+    ShowWindow(hConsole, SW_MINIMIZE);
 #endif
 }
 
-
+typedef void(__cdecl* tDrawString)(wchar_t* text, float x, float y, float scaleX, float scaleY);
+tDrawString oDrawString = (tDrawString)0x5D5B30;
 
 DWORD WINAPI MainThread(LPVOID)
 {
 	InitConsole();
 	InitHooks();
 
-
-
+ 
     typedef void(__thiscall* tOpenSub)(int menu);
     tOpenSub Open_SubMenu = (tOpenSub)0x5D7A40;
     
-    for (int i = 0; i < 21; i++)
-    {
-        CVisual::GameTextEx("Hello, world!", 1, 200, 0);
-        Open_SubMenu(i);
-        Sleep(1000);
-    }
 
     return 0;
 }

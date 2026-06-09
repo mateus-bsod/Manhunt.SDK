@@ -1,4 +1,4 @@
-#include "../../framework.h"
+
 #include "CPlayer.h"
 //
 
@@ -98,21 +98,37 @@ namespace CPlayer
 		return gPlayerHud != 0;
     }
 
-    void OpenSubMenu(int menu)
+    void SetMenu(int menu)
     {
-        typedef void(__thiscall* tOpenSub)(int menu);
-        tOpenSub Open_SubMenu = (tOpenSub)0x5D7A40;
-		Open_SubMenu(menu);
+		Call<0x5D7A40, int>(menu);
     }
+
+    void AccumulateTime()
+    {
+        __try {
+            void* pPlayer = *(void**)0x715B9C;
+            if (!pPlayer) return;
+
+            DWORD funcAddr = 0x45BB10;
+
+            __asm {
+                mov ecx, pPlayer
+                call funcAddr
+            }
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER) {}
+    }
+
+    void InstallHook()
+    {
+        g_ForcedPlayAnimHook = safetyhook::create_inline(
+            reinterpret_cast<void*>(0x4C8B20),
+            reinterpret_cast<void*>(&hkForcedPlayAnim)
+        );
+        oForcedPlayAnim =
+            g_ForcedPlayAnimHook.original<tForcedAnim>();
+    }
+
 }
 
-void InstallPlayerHooks()
-{
-    g_ForcedPlayAnimHook = safetyhook::create_inline(
-        reinterpret_cast<void*>(0x4C8B20),
-        reinterpret_cast<void*>(&hkForcedPlayAnim)
-    );
-    oForcedPlayAnim =
-        g_ForcedPlayAnimHook.original<tForcedAnim>();
-}
 

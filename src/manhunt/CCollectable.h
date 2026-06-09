@@ -1,7 +1,8 @@
 #pragma once
 
-typedef char(__thiscall* tCollectableParse)(void* pThis, int property);
+#include "../../framework.h"
 
+typedef char(__thiscall* tCollectableParse)(void* pThis, int property);
 
 #ifndef C_COLLECTABLE_H
 #define C_COLLECTABLE_H
@@ -9,11 +10,12 @@ typedef char(__thiscall* tCollectableParse)(void* pThis, int property);
     extern SafetyHookInline g_CollectableHook;
 #endif
 
+namespace CCollectable
+{
+    char __fastcall hkCollectableParse(
+        void* pThis,
+        void*,
+        int property);
 
-
-char __fastcall hkCollectableParse(
-    void* pThis,
-    void*,
-    int property);
-
-void InstallCollectableHook();
+    void InstallHook();
+}

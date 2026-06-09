@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../framework.h"
 
 #define WEAPON_VTABLE 0x6AB5CC
 
@@ -146,9 +147,9 @@ char __fastcall hkWeaponParse(
     void*,
     void* property);
 
-void InstallWeaponHook();
 
 namespace CWeapon
 {
     int GetCurrentWeapon();
+    void InstallHook();
 }

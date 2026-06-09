@@ -1,5 +1,4 @@
-#include "../../framework.h"
-#include ".././game.sdk.h"
+#include "CDebug.h"
 
 namespace CDebug
 {

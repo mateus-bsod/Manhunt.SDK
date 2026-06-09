@@ -1,8 +1,10 @@
 #include "../../framework.h"
 #include "CPhysics.h"
 
-
-void InstallPhysicsHook()
+namespace CPhysics
 {
+	void InstallHook()
+	{
 
+	}
 }

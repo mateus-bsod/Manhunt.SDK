@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../../framework.h"
+#include "../game.sdk.h"
+
 namespace CDebug
 {
     typedef void(__stdcall* ShowCredits_t)();
@@ -72,15 +75,9 @@ namespace CDebug
     //
 
 
-    void KillPlayer() // or [ sub_4BCCB0 ]
-    {
-        Call<0x5EE9A0>();
-    }
+    void KillPlayer(); // or [ sub_4BCCB0 ]
 
-    void TogglePlayerGodMode()
-    {
-        Call<0x5EE4F0>();
-    }
+    void TogglePlayerGodMode();
 
     //
 

@@ -1,3 +1,7 @@
 #pragma once
 
-void InstallPhysicsHook();
+namespace CPhysics
+{
+	void InstallHook();
+};
+

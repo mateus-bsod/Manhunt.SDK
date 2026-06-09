@@ -7,5 +7,9 @@
 #include <Windows.h>
 #include <cstdio>
 #include <cstring>
+#include <stdio.h>
+#include <vector>
+#include <string>
+#include <cstdarg>
 
 #include "lib/safetyhook.hpp"

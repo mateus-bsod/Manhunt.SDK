@@ -7,6 +7,8 @@
 #include "manhunt/CWeapons.h"
 #include "manhunt/CPlayer.h"
 #include "manhunt/CInventory.h"
+#include "manhunt/CMenu.h"
+#include "manhunt/CMainMenu.h"
 
 
 typedef void(__cdecl* tPrint)(void* logger, const char* text);
@@ -43,9 +45,11 @@ void InitHooks()
 
     //
 
-    InstallCollectableHook();
-    InstallWeaponHook();
-    InstallPlayerHooks();
-    InstallPhysicsHook();
-    InstallInventoryHook();
+    CCollectable::InstallHook();
+    CWeapon::InstallHook();
+    CPlayer::InstallHook();
+    CPhysics::InstallHook();
+    CInventory::InstallHook();
+    CMenu::InstallHook();
+    CMainMenu::InstallHook();
 }

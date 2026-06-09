@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../../framework.h"
+#include "../game.sdk.h"
+
 #define POINTER_PLAYER 0x715B9C
 
 enum PLAYER_STATE
@@ -1042,9 +1045,10 @@ namespace CPlayer
 	void TogglePlayerHud(bool toggle);
 	bool IsPlayerHudEnabled();
  
-    void OpenSubMenu(int menu);
+    void SetMenu(int menu);
+    void AccumulateTime();
 
     Player* GetPlayer();
+    void InstallHook();
 }
 
-void InstallPlayerHooks();

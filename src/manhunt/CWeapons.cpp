@@ -1,4 +1,3 @@
-#include "../../framework.h"
 #include "CWeapons.h"
 
 
@@ -30,16 +29,6 @@ char __fastcall hkWeaponParse(
     return ret;
 }
 
-void InstallWeaponHook()
-{
-    g_WeaponParseHook = safetyhook::create_inline(
-        (void*)0x442310,
-        (void*)&hkWeaponParse);
-
-    oWeaponParse =
-        g_WeaponParseHook.original<tWeaponParse>();
-}
-
 namespace CWeapon
 {
     // void SetOneHitKill(bool enabled)
@@ -63,5 +52,15 @@ namespace CWeapon
     {
         int weaponid = *reinterpret_cast<int*>(0x4C5A90);
         return weaponid;
+    }
+
+    void InstallHook()
+    {
+        g_WeaponParseHook = safetyhook::create_inline(
+            (void*)0x442310,
+            (void*)&hkWeaponParse);
+
+        oWeaponParse =
+            g_WeaponParseHook.original<tWeaponParse>();
     }
 }
