@@ -1,6 +1,13 @@
 
 #include "../framework.h"
 
+#include "CPhysics.h"
+#include "CCollectable.h"
+#include "CInventory.h"
+#include "CWeapons.h"
+#include "CPlayer.h"
+
+
 typedef void(__cdecl* tPrint)(void* logger, const char* text);
 
 tPrint oPrint = nullptr;
@@ -22,6 +29,8 @@ void __cdecl hkPrint(void* logger, const char* text)
 }
 
 
+
+
 void InitHooks()
 {
     g_PrintHook = safetyhook::create_inline(
@@ -31,4 +40,10 @@ void InitHooks()
 
     oPrint = g_PrintHook.original<tPrint>();
 
+    //
+
+    InstallCollectableHook();
+    InstallWeaponHook();
+    InstallPlayerHooks();
+    InstallPhysicsHook();
 }

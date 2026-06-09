@@ -1,8 +1,60 @@
  
 #include "framework.h"
+
+
+#include "src/CPlayer.h"
+
 #include "./src/game.h"
 #include "./src/hooks.h"
 
+#include <stdio.h>
+
+
+void GameTextEx(
+    const char* fmt,
+    int estado,
+    int time,
+    int effect,
+    int slot = 0)
+{
+    va_list va;
+    va_start(va, fmt);
+
+    DWORD* p318 = (DWORD*)0x7CF318;
+    DWORD* p380 = (DWORD*)0x7CF380;
+    DWORD* p3E8 = (DWORD*)0x7CF3E8; 
+    DWORD* p450 = (DWORD*)0x7CF450;
+
+    p318[slot] = estado;
+    p380[slot] = time;
+    p3E8[slot] = effect;
+
+    if (!p450[slot])
+    {
+        DWORD ret;
+
+        __asm
+        {
+            mov ecx, 0x67D000
+            push 0x200
+
+            mov eax, 0x401350
+            call eax
+
+            mov ret, eax
+        }
+
+        p450[slot] = ret;
+    }
+
+    typedef int(__cdecl* Format_t)(void*, int, int);
+    ((Format_t)0x614C80)(
+        (void*)p450[slot],
+        (int)fmt,
+        (int)va);
+
+    va_end(va);
+}
 
 void InitConsole()
 {
@@ -14,39 +66,12 @@ void InitConsole()
     freopen_s(&fp, "CONIN$", "r", stdin);
 
     SetConsoleTitleA("Manhunt Debug Console");
-
-    typedef void(__stdcall* pdiasodas)(int naosei);
-    static pdiasodas mateus_zin =
-        (pdiasodas)0x5D7A40;
-
-    typedef void(__stdcall* pdia323sodas)(int naosei);
-    static pdia323sodas towowo =
-        (pdia323sodas)0x5D7A40;
-
-
-    /*
+  
     
-int KillPlayer()
-{
-  int result; // eax
+    DWORD pPlayerAddr = *(DWORD*)0x715B9C;
+    Player* pPlayer = (Player*)pPlayerAddr;
 
-  sub_5D7A40(-1);
-  sub_431480(flt_7CC558); // flt-> sompra
-  result = sub_476BF0(0);
-  dword_7C86E8 = 0;
-  gDebug_Menu = 0;
-  return result;
-}
-    
-    */
 
-    if (Manhunt::PlayerState() == PLAYER_INGAME)
-    {
-        Manhunt::Visual::GameText("Manhunt Mod Loader: initialized!");
-        Manhunt::Visual::GameTextLeft(1, "Manhunt Mod Loader: initialized!");
-        Manhunt::ToggleFPS(true);
-        Manhunt::ToggleMemInfo(true);
-    }
 }
 
 

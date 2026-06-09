@@ -128,16 +128,7 @@ int Manhunt::Debug::GetInventoryInfo()
     return *reinterpret_cast<int*>(0x7C9B20);
 }
 
-int Manhunt::PlayerState() {
 
-	const int in_game = *reinterpret_cast<float*>(0x7D34F8); // dword_7D34F8
-	switch (in_game) {
-		case 0: return PLAYER_MENU;
-		case 1: return PLAYER_CUTSCENE;
-		case 2: return PLAYER_INGAME;
-	}
-	return PLAYER_INVALID;
-}
 
 void Manhunt::KillPlayer() // or [ sub_4BCCB0 ]
 {
@@ -184,40 +175,7 @@ void DisableHunters(bool state)
 
 //
 
-void Manhunt::SetPlayerCameraMode(CAMERA_MODE mode)
-{
-    int& gCameraMode = *reinterpret_cast<int*>(0x715BB0);
-    int& gCameraMode2 = *reinterpret_cast<int*>(0x715BB4);
 
-    switch (mode)
-    {
-    case CAMERA_MODE_FIRST_PERSON:
-        gCameraMode = 0;
-        gCameraMode2 = 0;
-        break;
-
-    case CAMERA_MODE_FLYMODE:
-        gCameraMode = 1;
-        gCameraMode2 = 0;
-        break;
-
-    case CAMERA_MODE_THIRD_PERSON:
-        gCameraMode = 1;
-        gCameraMode2 = 1;
-        break;
-    }
-}
-
-CAMERA_MODE Manhunt::GetPlayerCameraMode()
-{
-    int& gCameraMode = *reinterpret_cast<int*>(0x715BB0);
-    int& gCameraMode2 = *reinterpret_cast<int*>(0x715BB4);
-
-    if (!gCameraMode && !gCameraMode2) return CAMERA_MODE_FIRST_PERSON;
-    else if (gCameraMode && !gCameraMode2) return CAMERA_MODE_FLYMODE;
-    else if (gCameraMode && gCameraMode2) return CAMERA_MODE_THIRD_PERSON;
-    return CAMERA_MODE_INVALID;
-}
 
 // visual
 

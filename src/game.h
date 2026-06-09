@@ -1,20 +1,8 @@
 #pragma once
 
-enum
-{
-	PLAYER_INVALID = -1,
-	PLAYER_MENU = 0,
-	PLAYER_CUTSCENE = 1,
-	PLAYER_INGAME = 2
-};
 
-enum CAMERA_MODE
-{
-	CAMERA_MODE_INVALID		 = -1,
-	CAMERA_MODE_FLYMODE		 = 0,
-	CAMERA_MODE_FIRST_PERSON = 1,
-	CAMERA_MODE_THIRD_PERSON = 2
-};
+
+
 
 enum CT_WEAPON : int {
     CT_TRIPWIRE = 1,
@@ -223,6 +211,6 @@ namespace Manhunt {
 	void ToggleMemInfo(bool state);
 	void ToggleFPS(bool state);
 	
-	void SetPlayerCameraMode(CAMERA_MODE mode);
-	CAMERA_MODE GetPlayerCameraMode();
+
 }
+
