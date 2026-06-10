@@ -14,7 +14,6 @@ namespace CInput
 	int IsKeyReleased();
 	bool IsUsingMouse();
 	void* GetLocalizedString(void* pStringId);
-	void PlayMenuSound(int soundId, int pPlayer);
 	int GetSelectedOptionFromMouse();
 	void HealPlayer(void* pPlayer);
 	void ResetMenuState();

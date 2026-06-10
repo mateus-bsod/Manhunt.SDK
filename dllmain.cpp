@@ -10,6 +10,7 @@
 #include "src/manhunt/CWeapons.h"
 #include "src/manhunt/CVisual.h"    
 #include "src/manhunt/CInput.h"    
+#include "src/manhunt/CEntity.h"    
 
 #include "./src/hooks.h"
 
@@ -30,8 +31,8 @@ void InitConsole()
 
     SetConsoleTitleA("Manhunt Debug Console");
 
-    HWND hConsole = GetConsoleWindow();
-    ShowWindow(hConsole, SW_MINIMIZE);
+    //HWND hConsole = GetConsoleWindow();
+    //ShowWindow(hConsole, SW_MINIMIZE);
 #endif
 }
 
@@ -47,24 +48,93 @@ void MeuCallback(int button)
 }
 
 
-DWORD WINAPI MainThread(LPVOID)
+void unk_sub(int a1, int a2, int a3, ...)
 {
-	InitConsole();
-	InitHooks();
-
-
-    CVisual::ShowDialogBoxEx(
-        CText::KeyEx("Você tem certeza?"),
-        CText::KeyEx("Não"),
-        CText::KeyEx("Obvio que nao"),
-        MeuCallback
-    );
+    Call<0x850072>(a1, a2, a3);
+}
 
 
 
+DWORD WINAPI KillAllHunters(LPVOID) {
+    AllocConsole();
+    freopen("CONOUT$", "w", stdout);
 
+    printf("Pressione DELETE para matar todos hunters\n");
+
+    while (true) {
+        __try
+        {
+            DWORD player = CPlayer::GetPlayerBase();
+            if (!player) continue;
+
+            Vector* pos = CEntity::GetEntityPosition(player);
+            Vector* rot = CEntity::GetEntityRotation(player);
+            
+            Vector* boundmax = CEntity::GetEntityBoundingBoxMax(player);
+            Vector* boundmin = CEntity::GetEntityBoundingBoxMin(player);
+
+
+            char buffer[256];
+            float lineHeight = 0.04f;
+            float startY = 0.40f;
+            CVisual::DrawString(L"MATEUS", 0.580000, 0.400000, 1060320051, 0.700000);
+
+            // Posição
+            //sprintf(buffer, "Pos: %.2f %.2f %.2f", pos->x, pos->y, pos->z);
+            //CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY, 0.70f, 0.70f);
+
+            /*
+            // Rotação
+            sprintf(buffer, "Rot: %.2f %.2f %.2f", rot->x, rot->y, rot->z);
+            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight, 0.70f, 0.70f);
+
+            // Bounding Box Max
+            sprintf(buffer, "Bound Max: %.2f %.2f %.2f", boundmax->x, boundmax->y, boundmax->z);
+            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 2, 0.70f, 0.70f);
+
+            // Bounding Box Min
+            sprintf(buffer, "Bound Min: %.2f %.2f %.2f", boundmin->x, boundmin->y, boundmin->z);
+            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 3, 0.70f, 0.70f);
+            */
+
+
+        }
+        __except (EXCEPTION_EXECUTE_HANDLER)
+        {
+            continue;
+        }
+        Sleep(1000);
+    }
+    return 1;
+}
+
+
+DWORD WINAPI MainThread(LPVOID) {
+    InitConsole();
+    InitHooks();
+
+    /*
+    __try
+    {
+        CVisual::DrawString(
+            L"JOGAR",
+            0.58f,
+            0.40f,
+            0xFF,
+            0.70f
+        );
+
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+		printf("[CRASH] 0x%X", GetErrorMode());
+    }
+    */
+
+    CreateThread(0, 0, KillAllHunters, 0, 0, 0);
     return 0;
 }
+
 
 BOOL APIENTRY DllMain(
     HMODULE hModule,

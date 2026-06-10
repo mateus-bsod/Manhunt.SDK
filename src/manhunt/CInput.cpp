@@ -45,10 +45,6 @@ namespace CInput
 		return CallAndReturn<void*, 0x4937E0>(pStringId);
 	}
 
-	void PlayMenuSound(int soundId, int pPlayer)
-	{
-		Call<0x850072>(soundId, pPlayer);
-	}
 
 	int GetSelectedOptionFromMouse()
 	{

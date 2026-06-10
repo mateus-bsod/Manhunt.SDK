@@ -1,18 +1,6 @@
 
 #include "CPlayer.h"
-//
 
-tForcedAnim oForcedPlayAnim = nullptr;
-SafetyHookInline g_ForcedPlayAnimHook;
-int __fastcall hkForcedPlayAnim(void* pThis, void*, char* anim)
-{
-    printf(
-        "[ForcedPlayAnim] this=%p anim=%s\n",
-        pThis,
-        anim ? anim : "NULL");
-    
-   return oForcedPlayAnim(pThis, nullptr, anim);
-}
 
 //
 
@@ -78,12 +66,25 @@ namespace CPlayer
         return gFogColor;
 	}
 
+    DWORD GetPlayerBase() 
+    {
+        __try {
+            return *(DWORD*)0x715B9C;
+        }
+        __except (1) {
+            printf("[CRASH] GetPlayerBase");
+            return 0;
+        }
+    }
+
+    /*
     int GetPlayerBase()
     {
         DWORD addr = *(DWORD*)0x715B9C;
         if (!addr) return 0;
 		return addr;
     }
+    */
 
     Player* GetPlayer()
     {
@@ -129,12 +130,6 @@ namespace CPlayer
 
     void InstallHook()
     {
-        g_ForcedPlayAnimHook = safetyhook::create_inline(
-            reinterpret_cast<void*>(0x4C8B20),
-            reinterpret_cast<void*>(&hkForcedPlayAnim)
-        );
-        oForcedPlayAnim =
-            g_ForcedPlayAnimHook.original<tForcedAnim>();
     }
 
 }

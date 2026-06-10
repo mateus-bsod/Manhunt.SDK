@@ -34,6 +34,18 @@ namespace CVisual
         Call<0x5D55C0>(text, x, y, a4, a5, selected);
     }
 
+    /*
+    
+        DrawString(
+            L"JOGAR",
+            0.58f,
+            0.40f,
+            0.70f,
+            0.70f
+        );
+    
+    */
+
     void DrawString(wchar_t* text, float x, float y, int a4, float a5)
     {
         Call<0x5D5B30>(text, x, y, a4, a5);
@@ -45,6 +57,8 @@ namespace CVisual
     {
         ((void(__cdecl*)(const char*))0x005E5410)(text);
     }
+
+    // --------------------------------------------------------------------------------------------------------------
 
     void ShowDialogBox(void* pMessageText, void* pBtn1, void* pBtn2, int pBtn1_Column, int pBtn2_Column)
     {
@@ -90,6 +104,8 @@ namespace CVisual
 
         HideDialogBox();
     }
+
+    // --------------------------------------------------------------------------------------------------------------
 
     void InstallHook()
     {

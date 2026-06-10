@@ -81,6 +81,7 @@ namespace CMainMenu
         wchar_t* playText = CText::GetKey("PLAY");
         CVisual::DrawMenuItem(playText, x, baseY + (step * 0), v0, v1, selected == 0);
         CVisual::DrawString(playText, x, baseY + (step * 0), v0, v1);
+        printf("DEBUG DRAWSTRING(\"%s\", %f, %f, %d, %f)\n", playText, x, baseY + (step * 0), v0, v1);
 
         wchar_t* selsceText = CText::GetKey("SELSCE");
         CVisual::DrawMenuItem(selsceText, x, baseY + (step * 1), v0, v1, selected == 1);
