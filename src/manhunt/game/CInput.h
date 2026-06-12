@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../../framework.h"
-#include "CVisual.h"
-#include "../game.sdk.h"
+#include "../ui/CVisual.h"
+#include "../../game.sdk.h"
 
 namespace CInput
 {

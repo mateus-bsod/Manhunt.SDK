@@ -1,5 +1,6 @@
 #include "CWeapons.h"
 
+#define WEAPON_VTABLE (0x6AB5CC)
 
 tWeaponParse oWeaponParse = nullptr;
 SafetyHookInline g_WeaponParseHook;

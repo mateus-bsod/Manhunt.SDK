@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../game.sdk.h"
-#include "../../framework.h"
-#include "CEntity.h"
+#include "../../game.sdk.h"
+#include "../../../framework.h"
 
 
 struct Vector {

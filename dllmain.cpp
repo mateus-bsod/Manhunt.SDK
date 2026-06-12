@@ -4,13 +4,14 @@
 #include "framework.h"
 #include "./src/game.sdk.h"
 
-#include "src/manhunt/CPlayer.h"
-#include "src/manhunt/CText.h"
-#include "src/manhunt/CMainMenu.h"
-#include "src/manhunt/CWeapons.h"
-#include "src/manhunt/CVisual.h"    
-#include "src/manhunt/CInput.h"    
-#include "src/manhunt/CEntity.h"    
+#include "src/manhunt/entity/CPlayer.h"
+#include "src/manhunt/ui/CText.h"
+#include "src/manhunt/ui/CMainMenu.h"
+#include "src/manhunt/gameplay/CWeapons.h"
+#include "src/manhunt/ui/CVisual.h"    
+#include "src/manhunt/core/CGame.h"    
+#include "src/manhunt/game/CInput.h"    
+#include "src/manhunt/entity/CEntity.h"    
 
 #include "./src/hooks.h"
 
@@ -21,7 +22,6 @@
 
 void InitConsole()
 {
-#if DEBUG_CONSOLE 
     AllocConsole();
 
     FILE* fp;
@@ -31,42 +31,27 @@ void InitConsole()
 
     SetConsoleTitleA("Manhunt Debug Console");
 
-    //HWND hConsole = GetConsoleWindow();
-    //ShowWindow(hConsole, SW_MINIMIZE);
+#if DEBUG_CONSOLE == false
+    HWND hConsole = GetConsoleWindow();
+    ShowWindow(hConsole, SW_HIDE);
+#else
+    HWND hConsole = GetConsoleWindow();
+
+    RECT desktop;
+    GetWindowRect(GetDesktopWindow(), &desktop);
+
+    int consoleWidth = 600;
+    int consoleHeight = 400;
+
+    SetWindowPos(hConsole, NULL,
+        desktop.right - consoleWidth, 
+        desktop.bottom - consoleHeight,
+        consoleWidth, consoleHeight, SWP_NOZORDER);
+
+    ShowWindow(hConsole, SW_SHOW);
 #endif
 }
 
-
-void Test()
-{
-    DWORD p = *(DWORD*)0x82279C;
-
-    if (!p)
-        return;
-
-    DWORD renderer = *(DWORD*)p;
-
-    if (!renderer)
-        return;
-
-
-    DWORD func = 0x5F6E00;
-
-    __asm
-    {
-        push dword ptr ds : [0x7CE214]
-        push 1
-        push dword ptr ds : [0x7CD23C]
-        push dword ptr ds : [0x7CD54C]
-        push dword ptr ds : [0x7CE144]
-        push dword ptr ds : [0x7CE27C]
-        push dword ptr ds : [0x7CC568]
-        push dword ptr ds : [0x7CE280]
-
-        call func
-        add esp, 20h
-    }
-}
 
 DWORD WINAPI KillAllHunters(LPVOID) {
     AllocConsole();
@@ -96,7 +81,20 @@ DWORD WINAPI KillAllHunters(LPVOID) {
             {
                 __try
                 {
-                    Test();
+                    if (gRenderer || CPlayer::GetPlayerState() == PLAYER_INGAME)
+                    {
+                        sprintf(buffer, "Pos: %.2f %.2f %.2f", pos->x, pos->y, pos->z);
+						CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 0, 0.70f, 0.70f, 0, 0, 0);
+
+                        sprintf(buffer, "Rot: %.2f %.2f %.2f", rot->x, rot->y, rot->z);
+                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 1, 0.70f, 0.70f, 0, 0, 0);
+
+                        sprintf(buffer, "Bound Max: %.2f %.2f %.2f", boundmax->x, boundmax->y, boundmax->z);
+                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 2, 0.70f, 0.70f, 0, 0, 0);
+
+                        sprintf(buffer, "Bound Min: %.2f %.2f %.2f", boundmin->x, boundmin->y, boundmin->z);
+                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 3, 0.70f, 0.70f, 0, 0, 0);
+                    }
                 }
                 __except (MyExceptionFilter(GetExceptionInformation()))
                 {
@@ -106,20 +104,16 @@ DWORD WINAPI KillAllHunters(LPVOID) {
 
 
             // Posição
-            //sprintf(buffer, "Pos: %.2f %.2f %.2f", pos->x, pos->y, pos->z);
             //CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY, 0.70f, 0.70f);
 
             /*
             // Rotação
-            sprintf(buffer, "Rot: %.2f %.2f %.2f", rot->x, rot->y, rot->z);
             CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight, 0.70f, 0.70f);
 
             // Bounding Box Max
-            sprintf(buffer, "Bound Max: %.2f %.2f %.2f", boundmax->x, boundmax->y, boundmax->z);
             CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 2, 0.70f, 0.70f);
 
             // Bounding Box Min
-            sprintf(buffer, "Bound Min: %.2f %.2f %.2f", boundmin->x, boundmin->y, boundmin->z);
             CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 3, 0.70f, 0.70f);
             */
 
@@ -135,14 +129,12 @@ DWORD WINAPI KillAllHunters(LPVOID) {
 }
 
 
-DWORD WINAPI MainThread(LPVOID) {
+DWORD WINAPI MainThread(LPVOID)
+{
     InitConsole();
     InitHooks();
 
-    // Dentro do seu MainThread ou onde quiser testar
-
-
-
+    
     CreateThread(0, 0, KillAllHunters, 0, 0, 0);
     return 0;
 }

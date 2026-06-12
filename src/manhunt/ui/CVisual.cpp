@@ -1,7 +1,4 @@
-// CVisual.cpp
 #include "CVisual.h"
-#include "CInput.h"
-#include "CMainMenu.h"
 
 int& selectedDialog = *reinterpret_cast<int*>(0x7C8774);
 int& InDialogBox = *reinterpret_cast<int*>(0x7C8758);
@@ -21,10 +18,19 @@ namespace CVisual
 {
     
 
-    int LoadTexture(int txd, const char* texture)
+    int LoadTextureTXD(int txd, const char* texture)
     {
         return CallAndReturn<int, 0x5EA520, int, const char*>(txd, texture);
     }
+
+    int Load_Texture(int txd, const char* texture)
+    {
+        return (int)((int* (__cdecl*)(int, const char*))0x62F660)(txd, texture);
+    }
+
+
+    // ------------------------------------------------------------------------------------------------
+
 
     void DrawImage(float posX, float posY, float scaleX, float scaleY, int red, int green, int blue, int alpha, int pTexture)
     {
@@ -33,11 +39,44 @@ namespace CVisual
 
     // ------------------------------------------------------------------------------------------------
 
+    void DrawTextString(const char* text, float x, float y, float scaleX, float scaleY, int a6 /*nao sei*/, int style /*FONT*/, int a8 = 0)
+    {
+        if (style >= 3)
+        {
+            printf("[CVisual::DrawTextString] Crash, style (font) >= 3\n");
+            return;
+        }
+        Call<0x5E55E0>(text, x, y, scaleX, scaleY, a6, style, a8);
+    }
+
+
+    void Text_Render(const char* text, float x, float y, float scaleX, float scaleY, int a6, int style)
+    {
+        // A ordem correta baseada no assembly
+        Call<0x5E5980>(text, x, y, scaleX, scaleY, a6, style);
+    }
+
+
+    // ------------------------------------------------------------------------------------------------
+
+    void DrawMenuString(wchar_t* text, float x, float y, int textScaleX, float textScaleY)
+    {
+        Call<0x5D5B30>(text, x, y, textScaleX, textScaleY);
+    }
+
     void DrawMenuItem(wchar_t* text, float x, float y, int textScaleX, float textScaleY, int menuID)
     {
         // a4, v5 -> text scale?
         Call<0x5D55C0>(text, x, y, textScaleX, textScaleY, menuID);
+		DrawMenuString(text, x, y, textScaleX, textScaleY);
     }
+
+    void DrawMenuCameraCounter(const wchar_t* text)
+    {
+        Call<0x5D5740>(text);
+    }
+
+    // ------------------------------------------------------------------------------------------------
 
     void DrawColoredQuad(float x, float y, float width, float height, int r, int g, int b, int a, int unknown)
     {
@@ -110,12 +149,6 @@ namespace CVisual
 
     // ------------------------------------------------------------------------------------------------
 
-    void DrawString(wchar_t* text, float x, float y, int textScaleX, float textScaleY)
-    {
-        Call<0x5D5B30>(text, x, y, textScaleX, textScaleY);
-    }
-
-    //
 
     void GameText(const char* text)
     {

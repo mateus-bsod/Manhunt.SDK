@@ -1,18 +1,18 @@
 
 #include "../framework.h"
 
-#include "manhunt/CPhysics.h"
-#include "manhunt/CCollectable.h"
-#include "manhunt/CInventory.h"
-#include "manhunt/CWeapons.h"
-#include "manhunt/CPlayer.h"
-#include "manhunt/CInventory.h"
-#include "manhunt/CLoadGameWorld.h"
-#include "manhunt/CMenu.h"
-#include "manhunt/CText.h"
-#include "manhunt/CInput.h"
-#include "manhunt/CMainMenu.h"
-#include "manhunt/CGame.h"
+#include "manhunt/game/CPhysics.h"
+#include "manhunt/gameplay/CCollectable.h"
+#include "manhunt/gameplay/CInventory.h"
+#include "manhunt/gameplay/CWeapons.h"
+#include "manhunt/entity/CPlayer.h"
+#include "manhunt/game/CLoadGameWorld.h"
+#include "manhunt/ui/CMenu.h"
+#include "manhunt/ui/CText.h"
+#include "manhunt/game/CInput.h"
+#include "manhunt/ui/CMainMenu.h"
+#include "manhunt/core/CGame.h"
+#include "manhunt/core/CResourceManager.h"
 
 
 
@@ -35,7 +35,7 @@ void __cdecl hkPrint(void* logger, const char* text)
             return;
         }
         */
-        printf("[CGame::Log] %s\n", text);
+        //printf("[CGame::Log] %s\n", text);
     }
 
     oPrint(logger, text);
@@ -57,7 +57,8 @@ void InitHooks()
 
     //
 
-	CGame::InstallHook();
+    CResourceManager::InstallHook();
+    CGame::InstallHook();
 
     CCollectable::InstallHook();
     CWeapon::InstallHook();

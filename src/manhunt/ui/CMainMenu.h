@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../../framework.h"
+#include "../../../framework.h"
 
-#include "CMenu.h"
-#include "CPlayer.h"
-#include "CVisual.h"
-#include "CInput.h"
-#include "CText.h"
+#include "../ui/CMenu.h"
+#include "../entity/CPlayer.h"
+#include "../ui/CVisual.h"
+#include "../game/CInput.h"
+#include "../ui/CText.h"
 
-#include "../game.sdk.h"
+#include "../../game.sdk.h"
 
 //#include <windows.h>
 //#include <stdio.h>

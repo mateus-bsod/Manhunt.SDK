@@ -1,6 +1,6 @@
 #pragma once
-#include "../../framework.h"
-#include "../game.sdk.h"
+#include "../../../framework.h"
+#include "../../game.sdk.h"
 
 namespace CText
 {

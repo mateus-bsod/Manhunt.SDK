@@ -1,9 +1,9 @@
 // CLoadGameWorld.h
 #pragma once
 
-#include "../../framework.h"
-#include "CPlayer.h"
-#include "../game.sdk.h"
+#include "../../../framework.h"
+#include "../entity/CPlayer.h"
+#include "../../game.sdk.h"
 
 // ============================================================================
 // Engine

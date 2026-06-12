@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../../framework.h"
+#include "../../../framework.h"
 
-#define WEAPON_VTABLE 0x6AB5CC
 
 
 enum  

@@ -1,8 +1,12 @@
-// CVisual.h
 #pragma once
 
-#include "../../framework.h"
-#include "../game.sdk.h"
+#include "../../../framework.h"
+
+#include "../ui/CVisual.h"
+#include "../game/CInput.h"
+#include "../ui/CMainMenu.h"
+
+#include "../../game.sdk.h"
 
 extern int& selectedDialog;
 extern int& InDialogBox;
@@ -49,6 +53,10 @@ namespace CVisual
     int GetAspectRatio();
     int IsUIActive();
 
+    void DrawTextString(const char* text, float x, float y, float scaleX, float scaleY, int a6, int style /*FONT*/, int a8);
+
+    void Text_Render(const char* text, float x, float y, float scaleX, float scaleY, int a6, int style);
+
     // ------------------------------------------------------------------------------------------
 
     void ShowDialogBox(void* pMessageText, void* pBtn1, void* pBtn2, int pBtn1_Column = 1, int pBtn2_Column = 2);
@@ -59,7 +67,11 @@ namespace CVisual
 
     // ------------------------------------------------------------------------------------------
 
-    int LoadTexture(int txd, const char* texture);
+    int LoadTextureTXD(int txd, const char* texture);
+    int Load_Texture(int txd, const char* texture);
+
+    // ------------------------------------------------------------------------------------------
+
 
     // ------------------------------------------------------------------------------------------
 
@@ -67,8 +79,8 @@ namespace CVisual
     void DrawMenuItem(wchar_t* text, float x, float y, int textScaleX, float textScaleY, int selected);
     void DrawMenuItemEx(wchar_t* text, float x, float y, int fontType, float scale, int isHovered,
         int customR, int customG, int customB, int customA, float customPadding);
-    
-    void DrawString(wchar_t* text, float x, float y, int textScaleX, float textScaleY);
+    void DrawMenuCameraCounter(const wchar_t* text);
+
     void DrawColoredQuad(float x, float y, float width, float height, int r, int g, int b, int a, int unknown);
 
     // ---

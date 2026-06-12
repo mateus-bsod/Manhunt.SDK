@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../framework.h"
+#include "../../../framework.h"
 
 typedef char(__thiscall* tCollectableParse)(void* pThis, int property);
 
