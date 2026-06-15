@@ -3,7 +3,7 @@
 </p>
 
 
-# MH.ModLoader
+# MH.SDK
 O projeto tem como objetivo facilitar o acesso e, principalmente, o desenvolvimento de MODs para **Manhunt 1 (PC)**.
 
 Atualmente, todo o trabalho de pesquisa, mapeamento de estruturas internas e desenvolvimento está sendo realizado por mim, com o auxílio de ferramentas de IA para acelerar o processo de engenharia reversa e documentação técnica.
