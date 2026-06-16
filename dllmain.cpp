@@ -11,6 +11,7 @@
 #include "framework.h"
 #include "./src/game.sdk.h"
 
+#include "src/manhunt/core/CConfigs.h"
 #include "src/manhunt/entity/CPlayer.h"
 #include "src/manhunt/ui/CText.h"
 #include "src/manhunt/ui/CMainMenu.h"
@@ -27,16 +28,26 @@
 
 DWORD WINAPI MainThread(LPVOID)
 {
+    CConfigs::SetConfigPath("Manhunt.SDK/config.cfg");
+
+    // ------------------------------------------------------
+
     Console::Init();
     InitHooks();
 
     // Disable Lock On
-	PATCH(0x475EA0 + 0x273, 0x90, 5); // LOCK-ON
-    
+	// PATCH(0x475EA0 + 0x273, 0x90, 5); // LOCK-ON
+	// PATCH(0x5EF990 + 0x1EF0, 0x90, 5); // health
+
 	// Disable Crow and Rats
-    PATCH(0x5CF3D0 + 0x7, 0x90, 5); // UpdateCrowEffects
-    PATCH(0x474BD0 + 0xB5, 0x90, 5); // ManageCrowSwarm
-    PATCH(0x5CFAA0 + 0xCD7, 0x90, 5); // CrowLand (ou UpdateCrowSwarm)
+    //PATCH(0x5CF3D0 + 0x7, 0x90, 5); // UpdateCrowEffects
+    //PATCH(0x474BD0 + 0xB5, 0x90, 5); // ManageCrowSwarm
+    //PATCH(0x5CFAA0 + 0xCD7, 0x90, 5); // CrowLand (ou UpdateCrowSwarm)
+
+    // Disable neblina
+    //PATCH(0x4E9110 + 0xDD, 0x90, 5); // particulas de neblina
+    //PATCH(0x475EA0 + 0x25F, 0x90, 5); // particulas de neblina
+    // // PATCH(0x4F2F10 + 0x5B2, 0x90, 5); // particulas de neblina
     return 0;
 }
 

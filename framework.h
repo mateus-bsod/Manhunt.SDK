@@ -3,6 +3,7 @@
 #define WIN32_LEAN_AND_MEAN            
 #define _CRT_SECURE_NO_WARNINGS 
 
+#define MANHUNT_SDK_VERSION "1.0.0"
 
 #include <Windows.h>
 #include <cstdio>
@@ -17,3 +18,5 @@
 #include <chrono>
 
 #include "lib/safetyhook.hpp"
+
+#include "./src/manhunt/core/CConsole.h"

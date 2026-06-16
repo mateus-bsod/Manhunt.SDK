@@ -9,6 +9,7 @@
 
 #include "../framework.h"
 
+#include "manhunt/core/CConfigs.h"
 #include "manhunt/game/CPhysics.h"
 #include "manhunt/gameplay/CCollectable.h"
 #include "manhunt/gameplay/CInventory.h"
@@ -65,6 +66,7 @@ void InitHooks()
 
     //
 
+	CConfigs::InstallHook();
     CResourceManager::InstallHook();
     CGame::InstallHook();
 

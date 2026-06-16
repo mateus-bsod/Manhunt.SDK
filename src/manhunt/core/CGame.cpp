@@ -101,6 +101,10 @@ void CGame::InstallHook()
     oHUD_Draw = g_HUD_Draw.original<tHUD_Draw>();
 
     //
+    //      CARREGAR CONFIGS
+    //
+
+    //
     //      LOADING SCREEN - Da missão
     //
 
