@@ -1,5 +1,12 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//----------------------------------------------------------
 
 #define DEBUG_CONSOLE true
+
 
 #include "framework.h"
 #include "./src/game.sdk.h"
@@ -18,126 +25,21 @@
 #include <stdio.h>
 
 
-
-
-void InitConsole()
-{
-    AllocConsole();
-
-    FILE* fp;
-    freopen_s(&fp, "CONOUT$", "w", stdout);
-    freopen_s(&fp, "CONOUT$", "w", stderr);
-    freopen_s(&fp, "CONIN$", "r", stdin);
-
-    SetConsoleTitleA("Manhunt Debug Console");
-
-#if DEBUG_CONSOLE == false
-    HWND hConsole = GetConsoleWindow();
-    ShowWindow(hConsole, SW_HIDE);
-#else
-    HWND hConsole = GetConsoleWindow();
-
-    RECT desktop;
-    GetWindowRect(GetDesktopWindow(), &desktop);
-
-    int consoleWidth = 600;
-    int consoleHeight = 400;
-
-    SetWindowPos(hConsole, NULL,
-        desktop.right - consoleWidth, 
-        desktop.bottom - consoleHeight,
-        consoleWidth, consoleHeight, SWP_NOZORDER);
-
-    ShowWindow(hConsole, SW_SHOW);
-#endif
-}
-
-
-DWORD WINAPI KillAllHunters(LPVOID) {
-    AllocConsole();
-    freopen("CONOUT$", "w", stdout);
-
-
-    while (true) {
-        __try
-        {
-            DWORD player = CPlayer::GetPlayerBase();
-            if (!player) continue;
-
-            Vector* pos = CEntity::GetEntityPosition(player);
-            Vector* rot = CEntity::GetEntityRotation(player);
-            
-            Vector* boundmax = CEntity::GetEntityBoundingBoxMax(player);
-            Vector* boundmin = CEntity::GetEntityBoundingBoxMin(player);
-
-
-            char buffer[256];
-            float lineHeight = 0.04f;
-            float startY = 0.40f;
-
-
-
-            if (GetAsyncKeyState(VK_DELETE) & 1)
-            {
-                __try
-                {
-                    if (gRenderer || CPlayer::GetPlayerState() == PLAYER_INGAME)
-                    {
-                        sprintf(buffer, "Pos: %.2f %.2f %.2f", pos->x, pos->y, pos->z);
-						CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 0, 0.70f, 0.70f, 0, 0, 0);
-
-                        sprintf(buffer, "Rot: %.2f %.2f %.2f", rot->x, rot->y, rot->z);
-                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 1, 0.70f, 0.70f, 0, 0, 0);
-
-                        sprintf(buffer, "Bound Max: %.2f %.2f %.2f", boundmax->x, boundmax->y, boundmax->z);
-                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 2, 0.70f, 0.70f, 0, 0, 0);
-
-                        sprintf(buffer, "Bound Min: %.2f %.2f %.2f", boundmin->x, boundmin->y, boundmin->z);
-                        CVisual::DrawTextString(buffer, 0.58f, startY + lineHeight * 3, 0.70f, 0.70f, 0, 0, 0);
-                    }
-                }
-                __except (MyExceptionFilter(GetExceptionInformation()))
-                {
-                    printf("Exception: %08X\n", GetExceptionCode());
-                }
-            }
-
-
-            // Posição
-            //CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY, 0.70f, 0.70f);
-
-            /*
-            // Rotação
-            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight, 0.70f, 0.70f);
-
-            // Bounding Box Max
-            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 2, 0.70f, 0.70f);
-
-            // Bounding Box Min
-            CVisual::DrawString(CText::KeyEx(buffer), 0.58f, startY + lineHeight * 3, 0.70f, 0.70f);
-            */
-
-
-        }
-        __except (EXCEPTION_EXECUTE_HANDLER)
-        {
-            continue;
-        }
-        Sleep(80);
-    }
-    return 1;
-}
-
-
 DWORD WINAPI MainThread(LPVOID)
 {
-    InitConsole();
+    Console::Init();
     InitHooks();
 
+    // Disable Lock On
+	PATCH(0x475EA0 + 0x273, 0x90, 5); // LOCK-ON
     
-    CreateThread(0, 0, KillAllHunters, 0, 0, 0);
+	// Disable Crow and Rats
+    PATCH(0x5CF3D0 + 0x7, 0x90, 5); // UpdateCrowEffects
+    PATCH(0x474BD0 + 0xB5, 0x90, 5); // ManageCrowSwarm
+    PATCH(0x5CFAA0 + 0xCD7, 0x90, 5); // CrowLand (ou UpdateCrowSwarm)
     return 0;
 }
+
 
 
 BOOL APIENTRY DllMain(
