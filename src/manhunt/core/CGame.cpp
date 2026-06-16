@@ -1,298 +1,114 @@
-#include "../core/CGame.h"
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
 
-DWORD gRenderer;
+#include "CGame.h"
+#include "../core/CMath.h"
+#include "../entity/CEntity.h"
+#include "../gameplay/CWeapons.h"
+#include "../gameplay/CInventory.h"
+#include "../core/CResourceManager.h"
 
-namespace CGame
+DWORD CGame::gRenderer = 0;
+
+CGame::tOriginalEventHandler CGame::oEventHandler = nullptr;
+SafetyHookInline CGame::g_EventHandlerHook;
+
+CGame::tHUD_Draw CGame::oHUD_Draw = nullptr;
+SafetyHookInline CGame::g_HUD_Draw;
+
+CGame::tLoadingScreen CGame::oLoadingScreen = nullptr;
+SafetyHookInline CGame::g_LoadingScreen;
+
+int CGame::Game_IsInGame()
 {
-    typedef int (__cdecl* tOriginalEventHandler)(int a1, int a2);
-    tOriginalEventHandler oEventHandler = nullptr;
-    SafetyHookInline g_EventHandlerHook;
+    return CallAndReturn<int, 0x5EA4E0>();
+}
 
-    // --------------------------------------------------------------------------
+int CGame::Game_IsPaused()
+{
+    return CallAndReturn<int, 0x5EA2C0>();
+}
 
-    void InitialiseWorld(int missionId)
+int CGame::WorldToScreen(DWORD outScreen, float worldX, float worldZ)
+{
+    return CallAndReturn<int, 0x5DFEA0, DWORD, float, float>(outScreen, worldX, worldZ);
+}
+
+void CGame::InitialiseWorld(int missionId)
+{
+    Call<0x474330, int>(missionId);
+}
+
+int __cdecl CGame::hkEventHandler(int a1, int a2)
+{
+    __try
     {
-        Call<0x474330, int>(missionId);
-    }
-
-    // --------------------------------------------------------------------
-
-    typedef int (*tDraw)(int a1);
-    tDraw oDraw = nullptr;
-    SafetyHookInline g_Draw;
-
-
-
-    // 4. Chamar
-
-
-    int Draw(int a1)
-    {
-        __try
-        {
-
-        }
-        __except (EXCEPTION_EXECUTE_HANDLER)
-        {
-            printf("[CGame::Draw] Exception occurred during draw call.\n");
-            return 0;
-        }
-        /*
-        // Stack allocation (1BAC bytes)
-        char stackBuffer[0x1BAC];
-
-        // Begin render frame
-        RenderFrame_Begin();
-
-        // Skip if no debug mode
-        if (!dword_7CF080) {
-            return;
-        }
-
-        RenderFrame_End(0);
-
-        // Draw FPS counter
-        if (dword_7CF2D0 || dword_7D2E28) {
-            if (dword_7D2E28) {
-                nullsub_42(&dword_799B50);
-                dword_7CF2CC ^= 1;
-            }
-
-            if (dword_7CF2D0 == 1) {
-                if (dword_7CF2CC == 0) {
-                    dword_7CF260 = 1;
-                    dword_7CF264 = 0xFF;
-                    dword_7CF268 = 0;
-                }
-                else {
-                    dword_7CF260 = 1;
-                    dword_7CF264 = 0;
-                    dword_7CF268 = 0xFF;
-                }
-                dword_7CF26C = 0;
-            }
-            dword_7CF2D0 = 1;
-        }
-
-        // Draw FPS string
-        if (fps_info) {
-            float fpsValue = *(float*)0x7D34A0;
-            char fpsText[256];
-            sprintf(fpsText, "%.0f", fpsValue);
-
-            // Draw FPS text
-            Text_DrawFormatted(stackBuffer, 0x3EF9DB23, 0x3F666666, 0x3F333333, 0x3F333333, 1);
-        }
-
-        // Draw shadow cameras info
-        if (dword_7CF2C0) {
-            int shadowCount = dword_7CF2C4;
-            char shadowText[256];
-            sprintf(shadowText, "%d shadow cameras active", shadowCount);
-            Text_DrawFormatted(stackBuffer, 0x3F1C28F6, 0x3F23D70A, 0x3F333333, 0x3F333333, 1);
-            dword_7CF2C4 = 0;
-        }
-
-        // Draw timing bars
-        if (dword_7CF4B8 && !fps_info) {
-            for (int i = 0; i < 3; i++) {
-                float timingValue = *(float*)(0x7CF4D4 + i * 4);
-                char timingText[256];
-                sprintf(timingText, "(%d : %.3f ms)", i, timingValue);
-
-                float x = i * 0.05f;
-                Text_DrawFormatted(stackBuffer, 0x3CA3D70A, 0x3D23D70A, 0x3F333333, 0x3F333333, 1);
-            }
-        }
-
-        // Draw screen effects
-        if (dword_7CF098) {
-            float effect = *(float*)0x7D5234;
-            // ... effect processing ...
-
-            // Draw damage indicator
-            if (CPlayer) {
-                int health = *(int*)(CPlayer + 0x7C);
-                int currentHealth = *(int*)(health + 0x88);
-                // Draw health text
-            }
-
-            // Draw weapon info
-            Text_DrawFormatted(stackBuffer, 0x3CA3D70A, 0x3D75C28F, 0x3F333333, 0x3F333333, 1);
-        }
-
-        // Draw crosshair
-        if (dword_7CF0A0) {
-            // Draw crosshair based on scope
-            if (dword_7D37BC) {
-                Draw_ColoredQuad(0.5f, 0.5f, 0.1f, 0.1f, 255, 255, 255, 255);
-            }
-        }
-
-        // Draw player info (health/armor)
-        DrawPlayerInfo();
-
-        // Draw health bar
-        DrawHealthBar();
-
-        // Draw weapons
-        DrawWeapons();
-
-        // Update world and camera
-        World_Update();
-        Camera_Update();
-        Physics_Update();
-
-        // Draw tooltips
-        if (dword_7CF0B8) {
-            UI_DrawTooltip();
-        }
-
-        // Draw progress bars
-        UI_DrawProgressBars();
-
-        // Draw debug menu if enabled
-        if (gDebug_Menu) {
-            DrawDebugMenu();
-        }
-
-        // Night vision effect
-        if (dword_7CF0E0 && Player_State != 2) {
-            Draw_ColoredQuad(0, 0, 1, 1, 0, 0, 0, 255);
-        }
-
-        // End frame
-        RenderFrame_End(1);
-
-        // Update timer
-        int delta = Timer_GetDelta();
-        */
-        return oDraw(a1);
-    }
-
-
-
-
-    // --------------------------------------------------------------------------
-
-	// hkEventHandler é chamado apenas quando está no menu ou cutscenes.
-    int& dword_7D3460 = *reinterpret_cast<int*>(0x7D3460);
-    int& dword_7D4E90 = *reinterpret_cast<int*>(0x7D4E90);
-    int& dword_82279C = *reinterpret_cast<int*>(0x82279C);
-
-    __declspec(naked) void nullsub_71()
-    {
-        __asm retn
-    }
-
-    /*
-    int __cdecl sub_6260E0(int a1)
-    {
-        int result;
-
-        __asm
-        {
-            mov ecx, a1
-            mov eax, [esp + ecx]
-            call dword ptr[eax + 18h]
-            mov result, eax
-        }
-
-        return result;
-    }
-    */
-
-    void __declspec(noreturn) sub_6260E0(int a1)
-    {
-        __asm
-        {
-            mov eax, a1
-            jmp dword ptr[eax + 0x18]
-        }
-    }
-
-    int __cdecl sub_6260D0(int a1)
-    {
-        return (*(int (**)(void))(a1 + 28))();
-    }
-
-    int __cdecl hkEventHandler(int a1, int a2) // a2 - parece ser o state
-    {   
-		int ret = oEventHandler(a1, a2);
-        
-        // in game
+        int ret = oEventHandler(a1, a2);
         if (a2)
-        {
-            Player_State = 2;
-        }
-
-        // no menu
-        else if (Player_State != 1)
-        {
-            Player_State = 0;
-        }
-        
-        /*
-        int result = 0; // eax
-
-        printf("1..\n");
-        
-
-        printf("2..\n");
-        dword_7D3460 = a1;
-        if (dword_7D4E90)
-            return result;
-        
-        printf("3..\n");
-        if (!a2) sub_6260E0(a1);
-
-        printf("4..\n");
-        ((void(__cdecl*)(signed int, DWORD))(dword_82279C + 32))(1, 0);
-        printf("5..\n");
-        result = Draw(a1);
-
-        printf("6..\n");
-        if (!a2)
-            result = sub_6260D0(a1);
-        //if (!a2) result = nullsub_71(a1);
-        */
-        printf("[CGame::EventHandler] Event: %d, State: %d\n", a1, a2);
+            CPlayer::Player_State = 2;
+        else if (CPlayer::Player_State != 1)
+            CPlayer::Player_State = 0;
         return ret;
     }
+    __except (EXCEPTION_SDK)
+    {
+        Console::Printf("[CGame::hkEventHandler] Exception caught!");
+        return 0;
+    }
+}
+
+
+void CGame::HUD_Draw(int a1)
+{
+    Console::Draw();
+    
+	CPlayer* player = CPlayer::GetPlayer();
+
+    return oHUD_Draw(a1);
+}
+
+void CGame::LoadingScreen()
+{
+    oLoadingScreen();
+}
+
+
+
+void CGame::InstallHook()
+{
+    while (true)
+    {
+        DWORD p = *(DWORD*)0x82279C;
+        if (!p)
+        {
+            Console::Printf("[CGame::InstallHook] Waiting for renderer...");
+            Sleep(1000);
+            continue;
+        }
+        gRenderer = *(DWORD*)p;
+        if (gRenderer) break;
+    }
+
+    Console::Printf("[CGame::InstallHook] Renderer = [ 0x%08X ]", gRenderer);
+
+    g_HUD_Draw = safetyhook::create_inline((void*)0x5DE320, (void*)&CGame::HUD_Draw);
+    oHUD_Draw = g_HUD_Draw.original<tHUD_Draw>();
 
     //
+    //      LOADING SCREEN - Da missão
+    //
 
-    void InstallHook()
-    {
-        // ------------------------------------------------------
+    PATCH(0x5EEAD0 + 0x260, 0x90, 5);
+    //PATCH(0x5EEAD0 + 0x33C, 0x90, 5); // Nome da missao
+    PATCH(0x5EEAD0 + 0x426, 0x90, 5);
+    PATCH(0x5EEAD0 + 0x501, 0x90, 5);
 
-        //g_Draw = safetyhook::create_inline((void*)0x5EF990, (void*)&CGame__Draw);
-        //oDraw = g_Draw.original<tDraw>();
-
-        // ------------------------------------------------------
-
-        while (true)
-        {
-            DWORD p = *(DWORD*)0x82279C;
-            if (!p)
-            {
-                printf("\r[CGame::InstallHook] Waiting for renderer...\n");
-                Sleep(1000);
-                continue;
-            }
-
-            gRenderer = *(DWORD*)p;
-            if (gRenderer) break;
-        }
-
-        printf("[CGame::InstallHook] Renderer = [ 0x%08X ]\n", gRenderer);
-   
-
-        //g_EventHandlerHook = safetyhook::create_inline((void*)0x5EF900, (void*)&hkEventHandler);
-        //oEventHandler = g_EventHandlerHook.original<tOriginalEventHandler>();
-    }
-
-    void UinstallHook()
-    {
-    }
+    g_LoadingScreen = safetyhook::create_inline((void*)0x5EEAD0, (void*)&CGame::LoadingScreen);
+	oLoadingScreen = g_LoadingScreen.original<tLoadingScreen>();
 }

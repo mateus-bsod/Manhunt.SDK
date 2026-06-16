@@ -1,9 +1,19 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
 #include "../../../framework.h"
 
-namespace CPhysics
+class CPhysics
 {
-	void InstallHook();
+public:
+    static void InstallHook();
 };
 

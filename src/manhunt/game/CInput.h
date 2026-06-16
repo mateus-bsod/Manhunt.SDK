@@ -1,23 +1,37 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
-#include "../../framework.h"
+#include <thread>
+#include <chrono>
 #include "../ui/CVisual.h"
 #include "../../game.sdk.h"
+#include "../../../framework.h"
 
-namespace CInput
+class CInput
 {
-	int IsUpKeyPressed();
-	int IsDownKeyPressed();
-	int IsConfirmKeyPressed();
-	int IsActionKeyPressed();
-	int IsExitKeyPressed();
-	int IsKeyReleased();
-	bool IsUsingMouse();
-	void* GetLocalizedString(void* pStringId);
-	int GetSelectedOptionFromMouse();
-	void HealPlayer(void* pPlayer);
-	void ResetMenuState();
-	void InstallHook();
-	void Shutdown();
-	void CheckDialogInput();
-}
+private:
+    static bool g_DialogThreadRunning;
+
+public:
+    static int IsUpKeyPressed();
+    static int IsDownKeyPressed();
+    static int IsConfirmKeyPressed();
+    static int IsActionKeyPressed();
+    static int IsExitKeyPressed();
+    static int IsKeyReleased();
+    static bool IsUsingMouse();
+    static void* GetLocalizedString(void* pStringId);
+    static int GetSelectedOptionFromMouse();
+    static void ResetMenuState();
+    static void DialogThreadFunc();
+    static void InstallHook();
+    static void Shutdown();
+};

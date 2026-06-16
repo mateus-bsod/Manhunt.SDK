@@ -1,21 +1,27 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
+#include "../../game.sdk.h"
 #include "../../../framework.h"
 
-typedef char(__thiscall* tCollectableParse)(void* pThis, int property);
+typedef char(__fastcall* tCollectableParse)(void* pThis, void* _, int property);
 
-#ifndef C_COLLECTABLE_H
-#define C_COLLECTABLE_H
-    extern tCollectableParse oCollectableParse;
-    extern SafetyHookInline g_CollectableHook;
-#endif
-
-namespace CCollectable
+class CCollectable
 {
-    char __fastcall hkCollectableParse(
-        void* pThis,
-        void*,
-        int property);
+private:
+    static tCollectableParse oCollectableParse;
+    static SafetyHookInline g_CollectableHook;
 
-    void InstallHook();
-}
+    static char __fastcall hkCollectableParse(void* pThis, void* _, int property);
+
+public:
+    static void InstallHook();
+};

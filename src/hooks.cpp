@@ -1,3 +1,11 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
 
 #include "../framework.h"
 
@@ -6,7 +14,6 @@
 #include "manhunt/gameplay/CInventory.h"
 #include "manhunt/gameplay/CWeapons.h"
 #include "manhunt/entity/CPlayer.h"
-#include "manhunt/game/CLoadGameWorld.h"
 #include "manhunt/ui/CMenu.h"
 #include "manhunt/ui/CText.h"
 #include "manhunt/game/CInput.h"
@@ -35,7 +42,8 @@ void __cdecl hkPrint(void* logger, const char* text)
             return;
         }
         */
-        //printf("[CGame::Log] %s\n", text);
+
+		Console::Printf("[CGame::Log] %s\n", text);
     }
 
     oPrint(logger, text);
@@ -67,7 +75,6 @@ void InitHooks()
     CInventory::InstallHook();
     CMenu::InstallHook();
     CMainMenu::InstallHook();
-    //CLoadGameWorld::InstallHook();
     CVisual::InstallHook();
     CInput::InstallHook();
     CText::InstallHook();

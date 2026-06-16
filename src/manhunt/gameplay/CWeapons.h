@@ -1,10 +1,21 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
 #include "../../../framework.h"
+#include "../entity/CPlayer.h"
+#include "../entity/CEntity.h"
+#include "../gameplay/CInventory.h"
+#include "../core/CResourceManager.h"
 
-
-
-enum  
+enum
 {
     CT_TRIPWIRE = 1,
     CT_GASOLINE = 2,
@@ -54,7 +65,7 @@ enum
     CT_DESERTEAGLE = 46,
     CT_COLTCOMMANDO = 47,
     CT_SNIPERRIFLE = 48,
-    CT_SNIPERRIFLES = 48, // Ambos compartilham o ID 48
+    CT_SNIPERRIFLES = 48,
     CT_TRANQRIFLE = 49,
     CT_SAWNOFF = 50,
     CT_GRENADE = 51,
@@ -98,7 +109,7 @@ enum
     CT_PIGSYSHARD = 94,
     CT_PIGSYWIRE = 95,
     CT_PIGSYSPIKE = 96,
-    CT_HAMMER = 97, // ID solicitado
+    CT_HAMMER = 97,
     CT_DOLL1 = 98,
     CT_DOLL2 = 99,
     CT_DOLL3 = 100,
@@ -115,40 +126,58 @@ enum
     CT_UNRECOGNISEDCO = 111
 };
 
-
 #pragma pack(push, 1)
 struct CWeaponInfo
 {
-    void* vtable;                       // 0x00
-    char pad_0004[0x54 - 0x04];         // 0x04 - 0x54
-    float fMinFireRange;                // 0x54
-    float fMaxFireRange;                // 0x58
-    float fMaxFireRangeHitProb;         // 0x5C
-    char pad_0060[0x68 - 0x60];         // 0x60 - 0x68
-    int nMaxClips;                      // 0x68 (v2 + 26)
-    int nClipAmmo;                      // 0x6C (v2 + 27)
-    int nMaxShots;                      // 0x70 (v2 + 28)
+    void* vtable;
+    char pad_0004[0x54 - 0x04];
+    float fMinFireRange;
+    float fMaxFireRange;
+    float fMaxFireRangeHitProb;
+    char pad_0060[0x68 - 0x60];
+    int nMaxClips;
+    int nClipAmmo;
+    int nMaxShots;
+    char pad_0074[0x1AC - 0x74];
+    int nCurrentAmmo;
+};
+
+struct CWeaponSystem
+{
+    void* vtable;
+    DWORD unknown04;
+    DWORD* pWeaponSlots;
+};
+
+struct CWeaponSlots
+{
+    DWORD dwSlot1;
+    DWORD dwSlot2;
+    DWORD dwSlot3;
+    DWORD dwSlot4;
 };
 #pragma pack(pop)
 
-typedef char(__thiscall* tWeaponParse)(
-    void* pThis,
-    void* property);
+typedef char(__thiscall* tWeaponParse)(void* pThis, void* property);
 
-#ifndef C_WEAPON_H
-#define C_WEAPON_H
-    extern tWeaponParse oWeaponParse;
-    extern SafetyHookInline g_WeaponParseHook;
-#endif
-
-char __fastcall hkWeaponParse(
-    void* pThis,
-    void*,
-    void* property);
-
-
-namespace CWeapon
+class CWeapon
 {
-    int GetCurrentWeapon();
-    void InstallHook();
-}
+private:
+    static tWeaponParse oWeaponParse;
+    static SafetyHookInline g_WeaponParseHook;
+
+    static char __fastcall hkWeaponParse(void* pThis, void* _, void* property);
+
+public:
+    static int GetCurrentWeapon();
+    static const char* GetWeaponName(int weaponId);
+    static DWORD CWeapon::GiveWeaponWithAmmo(CEntity* entity, int weaponId, int ammo);
+    static DWORD GiveWeapon(CEntity* entity, const char* weaponName);
+    static CWeaponSystem* GetWeaponSystemFromPlayer(CPlayer* pPlayer);
+    static int Weapon_GetId(DWORD weapon);
+    static void Weapon_Select(CEntity* entity, int slot, int unk);
+    static void Weapon_ClearSlot(CEntity* entity, int slot);
+    static int GetWeaponAmmo(DWORD weapon);
+    static void SetWeaponAmmo(DWORD weapon, int ammo);
+    static void InstallHook();
+};

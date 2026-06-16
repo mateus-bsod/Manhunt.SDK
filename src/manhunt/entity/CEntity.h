@@ -1,38 +1,43 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
 #include "../../game.sdk.h"
 #include "../../../framework.h"
 
-
-struct Vector {
-    float x;
-    float y;
-    float z;
-};
-
-extern DWORD* CEntityList;
-namespace CEntity
+class CEntity
 {
-    void Shutdown();  // fake
+private:
+    static DWORD* m_EntityList;
 
-    //
-    void DestroyEntity(DWORD entity);
-    void RemoveHunter(DWORD entity);
-    bool IsHunter(DWORD entity);
-    void InitEntity(DWORD entity);
-    void ClearCurrentEntity(int val = 0);
-    void PlaySound(DWORD soundIndex);
-    void ApplySoundEffect(DWORD idx);
-    void ClearAudioSources();
-    void ClearAudioChannels();
-    void ClearParticleSystems();
-    int WorldUpdateReturn(int val = 1);
+public:
+    static void Shutdown();
+    void InitializeEntity();
+    void InitEntity(int* config);
+    bool IsValidEntity();
+    bool IsEntityDead();
+    void SetEntityHealth(int health);
+    void SetEntityInvincible(bool invincible);
+    void SetEntityAnimation(int start, int end, char value);
+    DWORD GetEntityMatrix();
+    void ClearCurrentEntity(int value);
+    void DestroyEntity();
+    void RemoveHunter();
+    bool IsHunter();
+    void SetPosition(float x, float y, float z);
+    void SetRotation(float rx, float ry, float rz);
+    Vector* GetEntityPosition();
+    Vector* GetEntityRotation();
+    Vector* GetEntityBoundingBoxMin();
+    Vector* GetEntityBoundingBoxMax();
     int DeleteAllHunters();
-
-    Vector* GetEntityPosition(DWORD entity);
-    Vector* GetEntityRotation(DWORD entity);
-
-    Vector* GetEntityBoundingBoxMax(DWORD entity);
-    Vector* GetEntityBoundingBoxMin(DWORD entity);
-
-}
+    float GetEntityHealthPercent();
+    int GetEntityMaxHealth();
+};

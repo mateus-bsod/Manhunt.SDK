@@ -1,9 +1,15 @@
-// CustomMenu.h
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
 #include "../../../framework.h"
-
-
 
 enum MENU_ITEM
 {
@@ -35,22 +41,22 @@ enum SUBMENU_ID
     SUBMENU_AUDIO = 19,
     SUBMENU_LOAD_GAME = 39,
     SUBMENU_SAVE_GAME = 27,
-    SUBMENU_CHEATS = 50  // Novo submenu para cheats
+    SUBMENU_CHEATS = 50
 };
 
 enum CHEAT_FLAGS
 {
-    CHEAT_RUN = 1 << 0,   // 1
-    CHEAT_SILENT = 1 << 1,   // 2
-    CHEAT_REGEN = 1 << 2,   // 4
-    CHEAT_HELI = 1 << 3,   // 8
-    CHEAT_FULEQ = 1 << 4,   // 16
-    CHEAT_SUPUN = 1 << 5,   // 32
-    CHEAT_RABBI = 1 << 6,   // 64
-    CHEAT_MONKEY = 1 << 7,   // 128
-    CHEAT_INVIS = 1 << 8,   // 256
-    CHEAT_PIGGS = 1 << 9,   // 512
-    CHEAT_GOD = 1 << 10   // 1024
+    CHEAT_RUN = 1 << 0,
+    CHEAT_SILENT = 1 << 1,
+    CHEAT_REGEN = 1 << 2,
+    CHEAT_HELI = 1 << 3,
+    CHEAT_FULEQ = 1 << 4,
+    CHEAT_SUPUN = 1 << 5,
+    CHEAT_RABBI = 1 << 6,
+    CHEAT_MONKEY = 1 << 7,
+    CHEAT_INVIS = 1 << 8,
+    CHEAT_PIGGS = 1 << 9,
+    CHEAT_GOD = 1 << 10
 };
 
 #define PAUSE_MENU_ADDR 0x5FFB50
@@ -68,56 +74,41 @@ extern tDrawText oDrawText;
 extern SafetyHookInline g_PauseMenuHook;
 extern SafetyHookInline g_DrawTextHook;
 
-
 extern int currentSelection;
 extern bool customMenuActive;
 
-signed int __fastcall hkPauseMenuControl(void* pThis, void*);
+signed int __fastcall hkPauseMenuControl(void* pThis, void* _);
 void __fastcall hkDrawText(void* text1, void* text2, void* text3, int a, int b);
 
-
-namespace CMenu
+class CMenu
 {
-    int IsMenuLocked();
-    void InstallHook();
+public:
+    static int IsMenuLocked();
+    static void InstallHook();
 };
-
-/*
 
 #pragma pack(push, 1)
 struct SaveLoadMenu
 {
-    // Slot de save individual
     struct SaveSlot
     {
-        char szSlotName[32];            // 0x00 - Nome do slot
-        DWORD dwSaveData[56];           // 0x20 - Dados do save (224 bytes)
-    };  // Total: 256 bytes por slot
+        char szSlotName[32];
+        DWORD dwSaveData[56];
+    };
 
-    SaveSlot aSaveSlots[8];             // 0x000 - 8 slots (2048 bytes)
-
-    // Estado do menu
-    int nSelectedIndex;                 // 0x800 - Índice selecionado (0-7)
-    int nPadding1[9];                   // 0x804 - Espaço reservado
-    int nMaxSlots;                      // 0x828 - Máximo de slots (7)
-    int nPadding2[2];                   // 0x82C - Espaço reservado
-    int nSelectedAction;                // 0x834 - Ação selecionada (3=Load)
-
-    // Status
-    bool bIsActive;                     // 0x8B8 - Menu está visível/ativo
-    float fBackgroundPos;               // 0x8BC - Posição do fundo
-    DWORD dwConfigFlags;                // 0x8C0 - Flags de configuração
-
-};  // Tamanho total: ~0x8C4 bytes
+    SaveSlot aSaveSlots[8];
+    int nSelectedIndex;
+    int nPadding1[9];
+    int nMaxSlots;
+    int nPadding2[2];
+    int nSelectedAction;
+    bool bIsActive;
+    float fBackgroundPos;
+    DWORD dwConfigFlags;
+};
 #pragma pack(pop)
 
 inline SaveLoadMenu* GetSaveLoadMenu()
 {
     return (SaveLoadMenu*)0x7C87CC;
 }
-
-// Uso
-SaveLoadMenu* pMenu = GetSaveLoadMenu();
-pMenu->nSelectedIndex = 2;  // Seleciona o terceiro slot
-
-*/

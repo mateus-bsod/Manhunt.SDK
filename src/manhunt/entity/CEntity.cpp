@@ -1,158 +1,245 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #include "CEntity.h"
 
-DWORD* CEntityList = (DWORD*)(0x69BBE4);
+DWORD* CEntity::m_EntityList = (DWORD*)(0x69BBEC);
 
-/*
+void CEntity::Shutdown()
+{
+    DWORD func = 0x437710;
+    __asm call func
+}
 
-	Delete All Hunters
+void CEntity::InitializeEntity()
+{
+    DWORD func = 0x437110;
+    __asm
+    {
+        mov ecx, this
+        call func
+    }
+}
 
-    DWORD node = *CEntityList;
-    int count = 0;
+void CEntity::InitEntity(int* config)
+{
+    DWORD func = 0x49BA50;
+    __asm
+    {
+        mov ecx, this
+        push config
+        call func
+    }
+}
 
-    while (node) {
-        DWORD entity = *(DWORD*)node;
-        if (entity) {
-            DWORD typePtr = *(DWORD*)(entity + 124);
-            if (typePtr) {
-                DWORD type = *(DWORD*)(typePtr + 4) & 0x1F;
-                if (type == 31) {
-                    // Seta flag de morte
-                    DWORD flags = *(DWORD*)(entity + 200);
-                    *(DWORD*)(entity + 200) = flags | 0x2;
-                    count++;
-                }
-            }
+bool CEntity::IsValidEntity()
+{
+    return CallAndReturn<bool, 0x431AE0, CEntity*>(this);
+}
+
+bool CEntity::IsEntityDead()
+{
+    DWORD func = 0x424090;
+    __asm
+    {
+        mov ecx, this
+        call func
+    }
+}
+
+void CEntity::SetEntityHealth(int health)
+{
+    DWORD func = 0x4A3EE0;
+    __asm
+    {
+        mov ecx, this
+        mov edi, health
+        push 0
+        push 1
+        call func
+    }
+}
+
+void CEntity::SetEntityInvincible(bool invincible)
+{
+    DWORD func = 0x4B2580;
+    DWORD inv = invincible ? 1 : 0;
+    __asm
+    {
+        mov ecx, this
+        push 0
+        push inv
+        call func
+    }
+}
+
+void CEntity::SetEntityAnimation(int start, int end, char value)
+{
+    DWORD func = 0x5A96B0;
+    __asm
+    {
+        mov ecx, this
+        add ecx, 116
+        push value
+        push end
+        push start
+        call func
+    }
+}
+
+
+DWORD CEntity::GetEntityMatrix() // falta terminar
+{
+    DWORD func = 0x4313B0;
+    __asm
+    {
+        mov ecx, this
+        call func
+    }
+    //Call<0x4313B0, CEntity*>(this);
+}
+
+void CEntity::ClearCurrentEntity(int value)
+{
+    Call<0x4AC1B0, CEntity*, int>(this, value);
+}
+
+void CEntity::DestroyEntity()
+{
+    Call<0x4813B0, CEntity*>(this);
+}
+
+void CEntity::RemoveHunter()
+{
+    DWORD func = 0x4EDA30;
+    __asm
+    {
+        mov ecx, this
+        call func
+    }
+}
+
+bool CEntity::IsHunter()
+{
+    __asm
+    {
+        mov ecx, this
+        mov eax, [ecx + 0x7C]
+        mov edx, [eax + 4]
+        and edx, 0x1F
+        cmp edx, 31
+        setz al
+        movzx eax, al
+    }
+}
+
+void CEntity::SetPosition(float x, float y, float z)
+{
+    Vector* pos = this->GetEntityPosition();
+    if (pos)
+    {
+        pos->x = x;
+        pos->y = y;
+        pos->z = z;
+    }
+}
+
+void CEntity::SetRotation(float rx, float ry, float rz)
+{
+    Vector* rot = this->GetEntityRotation();
+    if (rot)
+    {
+        rot->x = rx;
+        rot->y = ry;
+        rot->z = rz;
+    }
+}
+
+Vector* CEntity::GetEntityPosition()
+{
+    __asm
+    {
+        mov     ecx, this
+        mov     eax, [ecx + 0x80]
+        mov     eax, [eax + 0x4]
+        add     eax, 0x40
+    }
+}
+
+Vector* CEntity::GetEntityRotation()
+{
+    __asm
+    {
+        mov     ecx, this
+        mov     eax, [ecx + 0x80]
+        mov     eax, [eax + 0x4]
+        add     eax, 0x10
+    }
+}
+
+Vector* CEntity::GetEntityBoundingBoxMin()
+{
+    __asm
+    {
+        mov     ecx, this
+        mov     eax, [ecx + 0x80]
+        mov     eax, [eax + 0x4]
+        add     eax, 0x30
+    }
+}
+
+Vector* CEntity::GetEntityBoundingBoxMax()
+{
+    __asm
+    {
+        mov     ecx, this
+        mov     eax, [ecx + 0x80]
+        mov     eax, [eax + 0x4]
+        add     eax, 0x20
+    }
+}
+
+int CEntity::DeleteAllHunters()
+{
+    DWORD node = *m_EntityList;
+    int killed = 0;
+
+    while (node)
+    {
+        CEntity* entity = (CEntity*)node;
+        if (entity && entity->IsHunter())
+        {
+            entity->DestroyEntity();
+            killed++;
         }
         node = *(DWORD*)(node + 8);
     }
 
+    return killed;
+}
 
-*/
-
-namespace CEntity
+float CEntity::GetEntityHealthPercent()
 {
-    void Shutdown()  // fake
-    { 
-        Call<0x437710>();
-	}
-
-    //
-    void DestroyEntity(DWORD entity) 
-    { 
-        Call<0x4813B0, DWORD>(entity); 
-    }
-
-    void RemoveHunter(DWORD entity)
+    DWORD func = 0x5E78A0;
+    __asm
     {
-        Call<0x4EDA30, DWORD>(entity);
+        mov ecx, this
+        call func
     }
+}
 
-    bool IsHunter(DWORD entity) 
-    { 
-        DWORD* e = (DWORD*)entity;
-        return (*(DWORD*)(e[31] + 4) & 0xF) == 15;
-        // return CallAndReturn<bool, 0x431860>(entity); 
-    }
-
-    void InitEntity(DWORD entity) 
-    { 
-        Call<0x437110, DWORD>(entity);
-    }
-    
-    void ClearCurrentEntity(int val)
-    { 
-        Call<0x4AC1B0, int>(val); 
-    }
-
-    // Áudio
-    void PlaySound(DWORD soundIndex) 
-    { 
-        Call<0x618440, DWORD>(soundIndex); 
-    }
-    void ApplySoundEffect(DWORD idx) 
-    { 
-        Call<0x621B70, DWORD>(idx); 
-    }
-    void ClearAudioSources() 
-    { 
-        Call<0x4CDAD0>(); 
-    }
-    void ClearAudioChannels() 
-    { 
-        Call<0x4CDB70>(); 
-    }
-
-    void ClearParticleSystems()
-    { 
-        Call<0x49ACD0>();
-    }
-
-    int WorldUpdateReturn(int val) 
-    { 
-        return CallAndReturn<int, 0x480D30>(val); 
-    }
-
-    Vector* GetEntityPosition(DWORD entity) 
+int CEntity::GetEntityMaxHealth()
+{
+    DWORD func = 0x5E7890;
+    __asm
     {
-        __asm
-        {
-            mov     ecx, entity
-            mov     eax, [ecx + 0x80]
-            mov     eax, [eax + 0x4]
-            add     eax, 0x40
-        }
-    }
-
-    Vector* GetEntityRotation(DWORD entity)
-    {
-        __asm
-        {
-            mov     ecx, entity
-            mov     eax, [ecx + 0x80]
-            mov     eax, [eax + 0x4]
-            add     eax, 0x10
-        }
-    }
-
-    // --------------------------------------------------------------------------------
-
-    Vector* GetEntityBoundingBoxMin(DWORD entity)
-    {
-        __asm
-        {
-			mov     ecx, entity
-            mov     eax, [ecx + 0x80]
-            mov     eax, [eax + 0x4]
-            add     eax, 0x30
-        }
-    }
-    
-    Vector* GetEntityBoundingBoxMax(DWORD entity)
-    {
-        __asm
-        {
-            mov     ecx, entity
-            mov     eax, [ecx + 0x80]
-            mov     eax, [eax + 0x4]
-            add     eax, 0x20
-        }
-    }
-
-    // debug
-    int DeleteAllHunters() {
-        DWORD* listHead = (DWORD*)CEntityList;
-        DWORD node = *listHead;
-        int killed = 0;
-
-        while (node) {
-            DWORD entity = *(DWORD*)node;
-            if (entity && IsHunter(entity)) {
-                DestroyEntity(entity);
-                killed++;
-            }
-            node = *(DWORD*)(node + 8);
-        }
-
-        return killed;
+        mov ecx, this
+        call func
     }
 }

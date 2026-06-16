@@ -1,22 +1,47 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #include "CInventory.h"
 
-namespace CInventory
+tCycleInventoryItem CInventory::oCycleInventoryItem = nullptr;
+SafetyHookInline CInventory::g_CycleInventoryHook;
+
+DWORD& CInventory::SlotSelection::GetLastSelectedSlot()
 {
-    tCycleInventoryItem oCycleInventoryItem = nullptr;
-    SafetyHookInline g_CycleInventoryHook;
+    static DWORD& g_LastSelectedSlot = *(DWORD*)0x7C9B28;
+    return g_LastSelectedSlot;
+}
 
-    void __fastcall hkCycleInventoryItem(void* pThis, void* edx, int a1, int a2, int itemType, int direction)
-    {
-        oCycleInventoryItem(pThis, a1, a2, itemType, direction);
-    }
+DWORD& CInventory::SlotSelection::GetWeaponChangedFlag()
+{
+    static DWORD& g_WeaponChangedFlag = *(DWORD*)0x7C9B30;
+    return g_WeaponChangedFlag;
+}
 
-    void InstallHook()
-    {
-        g_CycleInventoryHook = safetyhook::create_inline(
-            (void*)0x45BFC0,
-            (void*)hkCycleInventoryItem
-        );
-        oCycleInventoryItem =
-            g_CycleInventoryHook.original<tCycleInventoryItem>();
-    }
-};
+DWORD& CInventory::SlotSelection::GetWeaponEmptyFlag()
+{
+    static DWORD& g_WeaponEmptyFlag = *(DWORD*)0x7C9B74;
+    return g_WeaponEmptyFlag;
+}
+
+DWORD& CInventory::SlotSelection::GetCurrentSelectedSlot()
+{
+    static DWORD& g_CurrentSelectedSlot = *(DWORD*)0x7C9CD0;
+    return g_CurrentSelectedSlot;
+}
+
+int CInventory::Inventory_GetItemType()
+{
+    return CallAndReturn<int, 0x4F8150, CInventory*>(this);
+}
+
+void CInventory::InstallHook()
+{
+
+}

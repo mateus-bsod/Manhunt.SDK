@@ -1,7 +1,15 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #pragma once
 
 void __cdecl hkPrint(void* logger, const char* text);
-int __fastcall hkLoadTexture(void* ecx, void*, const char* str);
 
 extern DWORD gRenderer;
 

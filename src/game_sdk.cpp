@@ -1,12 +1,21 @@
+//----------------------------------------------------------
+//
+// Manhunt.SDK Modification For Manhunt 1 (2003)
+// Copyright © Manhunt.SDK team
+//
+//                 Mateus "maph0rip" Mesquita
+//
+//----------------------------------------------------------
+
 #include "game.sdk.h"
 
 
 int MyExceptionFilter(EXCEPTION_POINTERS* ep)
 {
-    printf("Code: %08X\n",
+    Console::Printf("Code: %08X",
         ep->ExceptionRecord->ExceptionCode);
 
-    printf("EIP: %08X\n",
+    Console::Printf("EIP: %08X",
         ep->ContextRecord->Eip);
 
     return EXCEPTION_EXECUTE_HANDLER;
