@@ -11,7 +11,8 @@ Atualmente, todo o trabalho de pesquisa, mapeamento de estruturas internas e des
 A longo prazo, a ideia é transformar o projeto em uma plataforma completa para a comunidade de modding de Manhunt, incluindo documentação, ferramentas e um fórum dedicado para compartilhamento de conhecimento, projetos e recursos.
 
 # Agradecimentos
-- Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt).
+- Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt). (RW .sig)
+- Thanks to [sigmaco](https://github.com/sigmaco) for [rwsrc](https://github.com/sigmaco/rwsrc-v3.7.0.2). (RW SDK)
 
 
 #
