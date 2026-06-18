@@ -12,7 +12,7 @@ A longo prazo, a ideia é transformar o projeto em uma plataforma completa para 
 
 # Agradecimentos
 - Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt). (RW .sig)
-- Thanks to [sigmaco](https://github.com/sigmaco) for [rwsrc](https://github.com/sigmaco/rwsrc-v3.7.0.2). (RW SDK)
+- Thanks to [sigmaco](https://github.com/sigmaco) for [rwsdk](https://github.com/sigmaco/rwsdk-v3.7.0.2/tree/master). (RW SDK)
 
 
 #
