@@ -38,7 +38,7 @@ private:
     static SafetyHookInline g_ParseGameConfigHook;
     static GameConfig m_config;
     static bool m_initialized;
-    static std::string m_configPath;
+    static const std::string m_configPath;
 
     static void InitGameConfig();
     static void ProcessKeyValue(const char* key, int value);

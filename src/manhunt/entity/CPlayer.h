@@ -1048,5 +1048,8 @@ public:
     static void AccumulateTime();
     static CPlayer* GetPlayer();
     static DWORD* GetPlayerBase();
+
+    static void GetMissionName(int missionid, int*& missionName, int*& subtitle);
+    static int GetPlayerMission();
     static void InstallHook();
 };

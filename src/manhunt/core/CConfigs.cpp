@@ -7,7 +7,7 @@ CConfigs::tParseGameConfig CConfigs::oParseGameConfig = nullptr;
 SafetyHookInline CConfigs::g_ParseGameConfigHook;
 CConfigs::GameConfig CConfigs::m_config;
 bool CConfigs::m_initialized = false;
-std::string CConfigs::m_configPath = "";
+const std::string CConfigs::m_configPath = "Manhunt.SDK/config.cfg";
 
 void CConfigs::InitGameConfig()
 {
@@ -41,7 +41,8 @@ void CConfigs::LoadConfigFromFile()
 {
     std::ifstream file(m_configPath);
     if (!file.is_open()) {
-        Console::Printf("[CConfigs] Failed to open config file: %s", m_configPath.c_str());
+		MessageBoxA(nullptr, ("Failed to open config file: " + m_configPath).c_str(), "Error", MB_ICONERROR);
+        exit(EXIT_FAILURE);
         return;
     }
 
@@ -166,11 +167,6 @@ signed int CConfigs::ParseGameConfig()
 int __thiscall CConfigs::hkParseGameConfig(void* pThis)
 {
     ParseGameConfig();
-
-    if (oParseGameConfig) {
-        return oParseGameConfig(pThis);
-    }
-
     return 0;
 }
 
@@ -192,9 +188,4 @@ void CConfigs::UninstallHook()
         oParseGameConfig = nullptr;
         Console::Printf("[CConfigs] Hook uninstalled");
     }
-}
-
-void CConfigs::SetConfigPath(const std::string& path)
-{
-    m_configPath = path;
 }

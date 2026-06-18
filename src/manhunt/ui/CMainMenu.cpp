@@ -49,67 +49,6 @@ int sub_606EB0(int* saveList, double a2, int a3)
     return CallAndReturn<int, 0x606EB0, int*, double, int>(saveList, a2, a3);
 }
 
-void* __cdecl CMainMenu::hkMainMenu()
-{
-    int v0 = *(int*)0x7C8720;
-    float v1 = *(float*)0x7C8724;
-    float v2 = *(float*)0x7C8728;
-    int selected = *(int*)0x7C89D4;
-
-    /*
-    __try {
-        wchar_t* cheatText = CText::GetKey("MAINM");
-        CVisual::DrawMenuCameraCounter(cheatText);
-    }
-    __except (EXCEPTION_EXECUTE_HANDLER) {
-    }
-    */
-
-    int logoTexture = CVisual::LoadTextureTXD(*(int*)0x7C8704, "logo");
-    float logoScale = *(float*)0x7D3458 * *(float*)0x7D63FC;
-
-    float x = 0.0579999983f * 6;
-    float baseY = *(float*)0x7D640C;
-    float step = 0.06f;
-
-    CVisual::DrawImage(x - 0.03f, baseY - 0.18f, logoScale, *(float*)0x7D6400, 180, 180, 180, 255, logoTexture);
-
-    x += 0.057f;
-
-    CVisual::DrawMenuItem(CText::GetKey("PLAY"), x + 0.065f, baseY + (step * 0), v0, v1, selected == 0);
-    CVisual::DrawMenuItem(CText::GetKey("SELSCE"), x - 0.007f, baseY + (step * 1), v0, v1, selected == 1);
-    CVisual::DrawMenuItem(CText::GetKey("LOADG"), x + 0.0015f, baseY + (step * 2), v0, v1, selected == 2);
-    CVisual::DrawMenuItem(CText::GetKey("SETT"), x + 0.002f, baseY + (step * 3), v0, v1, selected == 3);
-    CVisual::DrawMenuItem(CText::GetKey("BONFEA"), x - 0.002f, baseY + (step * 4), v0, v1, selected == 4);
-    CVisual::DrawMenuItem(CText::GetKey("QUITPRG"), x + 0.065f + 0.01f, baseY + (step * 5), v0, v1, selected == 5);
-
-    int cheatFlag = *(int*)0x7C84A8;
-    wchar_t* cheatText = (wchar_t*)0x7D6360;
-
-    if (cheatFlag) {
-        switch (cheatFlag) {
-        case 1: cheatText = CText::GetKey("C_RUN"); break;
-        case 2: cheatText = CText::GetKey("C_SILEN"); break;
-        case 4: cheatText = CText::GetKey("C_REGEN"); break;
-        case 8: cheatText = CText::GetKey("C_HELI"); break;
-        case 16: cheatText = CText::GetKey("C_FULEQ"); break;
-        case 32: cheatText = CText::GetKey("C_SUPUN"); break;
-        case 64: cheatText = CText::GetKey("C_RABBI"); break;
-        case 128: cheatText = CText::GetKey("C_MONKE"); break;
-        case 256: cheatText = CText::GetKey("C_INVIS"); break;
-        case 512: cheatText = CText::GetKey("C_PIGGS"); break;
-        case 1024: cheatText = CText::GetKey("C_GOD"); break;
-        }
-    }
-
-    if (*(int*)0x7C84AC == 1) {
-        oPrintCheat(cheatText, (void*)0x7D6360, (void*)0x7D6360, (void*)0x7D6360);
-    }
-
-    return (void*)0x7D6360;
-}
-
-/*
 
 void* __cdecl CMainMenu::hkMainMenu()
 {
@@ -118,12 +57,7 @@ void* __cdecl CMainMenu::hkMainMenu()
     float v2 = *(float*)0x7C8728;
     int selected = *(int*)0x7C89D4;
 
-    __try {
-        wchar_t* cheatText = CText::GetKey("MAINM");
-        CVisual::DrawMenuCameraCounter(cheatText);
-    }
-    __except (EXCEPTION_EXECUTE_HANDLER) {
-    }
+    CVisual::DrawMenuCameraCounter(L"~star~ MANHUNT.SDK ~star~");
 
     int logoTexture = CVisual::LoadTextureTXD(*(int*)0x7C8704, "logo");
     float logoScale = *(float*)0x7D3458 * *(float*)0x7D63FC;
@@ -166,9 +100,6 @@ void* __cdecl CMainMenu::hkMainMenu()
 
     return (void*)0x7D6360;
 }
-
-
-*/
 
 void CMainMenu::SetColor(int r, int g, int b, int a)
 {

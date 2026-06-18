@@ -31,6 +31,7 @@ private:
     static SafetyHookInline g_LoadingScreen;
     static void CGame::LoadingScreen();
 
+
 public:
     static void InstallHook();
 

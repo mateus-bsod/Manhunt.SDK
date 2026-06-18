@@ -70,15 +70,14 @@ void CGame::HUD_Draw(int a1)
     
 	CPlayer* player = CPlayer::GetPlayer();
 
-    return oHUD_Draw(a1);
+    return CGame::oHUD_Draw(a1);
 }
+
 
 void CGame::LoadingScreen()
 {
     oLoadingScreen();
 }
-
-
 
 void CGame::InstallHook()
 {
@@ -112,6 +111,10 @@ void CGame::InstallHook()
     //PATCH(0x5EEAD0 + 0x33C, 0x90, 5); // Nome da missao
     PATCH(0x5EEAD0 + 0x426, 0x90, 5);
     PATCH(0x5EEAD0 + 0x501, 0x90, 5);
+
+
+    //SendMessage(g_hVideoDialog, WM_COMMAND, MAKEWPARAM(1, 0), 0);
+
 
     g_LoadingScreen = safetyhook::create_inline((void*)0x5EEAD0, (void*)&CGame::LoadingScreen);
 	oLoadingScreen = g_LoadingScreen.original<tLoadingScreen>();

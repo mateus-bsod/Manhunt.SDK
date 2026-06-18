@@ -57,6 +57,22 @@ PLAYER_STATE CPlayer::GetPlayerState()
     return PLAYER_INVALID;
 }
 
+int CPlayer::GetPlayerMission()
+{
+	return *reinterpret_cast<int*>(0x75622C);
+}
+
+void CPlayer::GetMissionName(int missionid, int*& missionName, int*& subtitle)
+{
+    DWORD func = 0x5D6770;
+    __asm {
+        push subtitle
+        push missionName
+        push missionid
+        call dword ptr[func]
+        add esp, 0x0C
+    }
+}
 void CPlayer::SetPlayerFogColor(DWORD color)
 {
     DWORD& gFogColor = *reinterpret_cast<DWORD*>(0x715BB8);

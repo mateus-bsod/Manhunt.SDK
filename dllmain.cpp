@@ -11,6 +11,8 @@
 #include "framework.h"
 #include "./src/game.sdk.h"
 
+#include "src/manhunt/core/CDiscord.h"
+#include "src/manhunt/core/CConfigs.h"
 #include "src/manhunt/core/CConfigs.h"
 #include "src/manhunt/entity/CPlayer.h"
 #include "src/manhunt/ui/CText.h"
@@ -28,12 +30,10 @@
 
 DWORD WINAPI MainThread(LPVOID)
 {
-    CConfigs::SetConfigPath("Manhunt.SDK/config.cfg");
+    HMODULE hD3D8 = LoadLibraryA("d3d8.dll");
+    if (!hD3D8)
+        MessageBoxA(nullptr, "[SDK] d3d8.dll não encontrada!", "Manhunt.SDK", MB_OK | MB_ICONINFORMATION);
 
-    // ------------------------------------------------------
-
-    Console::Init();
-    InitHooks();
 
     // Disable Lock On
 	// PATCH(0x475EA0 + 0x273, 0x90, 5); // LOCK-ON
@@ -48,6 +48,9 @@ DWORD WINAPI MainThread(LPVOID)
     //PATCH(0x4E9110 + 0xDD, 0x90, 5); // particulas de neblina
     //PATCH(0x475EA0 + 0x25F, 0x90, 5); // particulas de neblina
     // // PATCH(0x4F2F10 + 0x5B2, 0x90, 5); // particulas de neblina
+    InitHooks();
+    Console::Init();
+	CDiscord::initDiscord();
     return 0;
 }
 
@@ -63,19 +66,14 @@ BOOL APIENTRY DllMain(
     {
         DisableThreadLibraryCalls(hModule);
 
-        CreateThread(
-            nullptr,
-            0,
-            MainThread,
-            nullptr,
-            0,
-
-            nullptr
-        );
+        HANDLE hThread = CreateThread(nullptr, 0, MainThread, nullptr, 0, nullptr);
+        if (hThread)
+            CloseHandle(hThread);
     }
 	if (reason == DLL_PROCESS_DETACH)
     {
         CInput::Shutdown();
+        CDiscord::Shutdown();
     }
 
     return TRUE;
