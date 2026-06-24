@@ -20,11 +20,4 @@ In the long term, the idea is to transform the project into a complete platform 
 
 #
 
-##### If you liked the proposal, you can check out the current project documentation here (a website with the script documentation in Lua code will be available in the future).:
-
-<p align="center">
-https://github.com/mateus-bsod/MH.ModLoader/wiki
-</p>
-
-
-###### The documentation is still under development. At this time, the main focus is on implementing new features and expanding the technical base of Mod Loader. As the project matures, more content, examples, and tutorials will be added.
+##### The wiki is being developed; I will soon purchase the domain and post it online.
