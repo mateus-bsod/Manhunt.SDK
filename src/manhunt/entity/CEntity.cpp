@@ -205,24 +205,7 @@ Vector* CEntity::GetEntityBoundingBoxMax()
     }
 }
 
-int CEntity::DeleteAllHunters()
-{
-    DWORD node = *m_EntityList;
-    int killed = 0;
 
-    while (node)
-    {
-        CEntity* entity = (CEntity*)node;
-        if (entity && entity->IsHunter())
-        {
-            entity->DestroyEntity();
-            killed++;
-        }
-        node = *(DWORD*)(node + 8);
-    }
-
-    return killed;
-}
 
 float CEntity::GetEntityHealthPercent()
 {
