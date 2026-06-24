@@ -31,12 +31,15 @@ private:
         int* dword_7D9248;
         int* dword_7D4E98;
         int* dword_736BC4;
+        int RatsAndCrows;
+        int DisableLockOn;
+        int DisableWeather;
+        int DisableNewspapers;
     };
 
     typedef int(__thiscall* tParseGameConfig)(void*);
     static tParseGameConfig oParseGameConfig;
     static SafetyHookInline g_ParseGameConfigHook;
-    static GameConfig m_config;
     static bool m_initialized;
     static const std::string m_configPath;
 
@@ -47,6 +50,7 @@ private:
     static void LoadConfigFromFile();
 
 public:
+    static GameConfig m_config;
     static void InstallHook();
     static void UninstallHook();
     static void SetConfigPath(const std::string& path);

@@ -33,6 +33,10 @@ void CConfigs::InitGameConfig()
     m_config.dword_7D9248 = (int*)0x7D9248;
     m_config.dword_7D4E98 = (int*)0x7D4E98;
     m_config.dword_736BC4 = (int*)0x736BC4;
+    m_config.RatsAndCrows = 0; // no disable by default
+    m_config.DisableLockOn = 0; // no disable by default
+    m_config.DisableWeather = 0; // no disable by default
+	m_config.DisableNewspapers = 0; // no disable by default
 
     m_initialized = true;
 }
@@ -79,6 +83,7 @@ void CConfigs::LoadConfigFromFile()
 
 void CConfigs::ProcessKeyValue(const char* key, int value)
 {
+    // default
     if (_stricmp(key, "SKIP_MENU") == 0) {
         *m_config.dword_7D4E8C = (value > 0) ? 1 : 0;
         if (*m_config.dword_736BC4 >= 0 && *m_config.dword_736BC4 != -2) {
@@ -144,6 +149,29 @@ void CConfigs::ProcessKeyValue(const char* key, int value)
         *m_config.dword_7D9248 = (value > 0) ? 1 : 0;
         Console::Printf("[CConfigs] USE_MEMORY_CARD set to %d", *m_config.dword_7D9248);
     }
+
+	// custom
+
+    // Disable Crow and Rats
+    if (_stricmp(key, "DISABLE_RATS_AND_CROWS") == 0) {
+        m_config.RatsAndCrows = (value > 0) ? 1 : 0;
+        Console::Printf("[CConfigs] DISABLE_RATS_AND_CROWS set to %d", m_config.RatsAndCrows);
+    }
+    // Disable Lock On
+    if (_stricmp(key, "DISABLE_LOCK_ON") == 0) {
+        m_config.DisableLockOn = (value > 0) ? 1 : 0;
+        Console::Printf("[CConfigs] DISABLE_LOCK_ON set to %d", m_config.DisableLockOn);
+    }
+
+    if (_stricmp(key, "DISABLE_WEATHER") == 0) {
+        m_config.DisableWeather = (value > 0) ? 1 : 0;
+        Console::Printf("[CConfigs] DISABLE_WEATHER set to %d", m_config.DisableWeather);
+    }
+
+    if (_stricmp(key, "DISABLE_NEWSPAPERS") == 0) {
+        m_config.DisableNewspapers = (value > 0) ? 1 : 0;
+        Console::Printf("[CConfigs] DISABLE_NEWSPAPERS set to %d", m_config.DisableNewspapers);
+    }
 }
 
 signed int CConfigs::ParseGameConfig()
@@ -159,6 +187,16 @@ signed int CConfigs::ParseGameConfig()
     *m_config.dword_7D359C = 0;
     *m_config.unk_7CA2B8 = 128;
     *m_config.dword_7D4E98 = 0;
+
+    if (m_config.RatsAndCrows == 1) {
+        PATCH(0x5CF3D0 + 0x7, 0x90, 5); // UpdateCrowEffects
+        PATCH(0x474BD0 + 0xB5, 0x90, 5); // ManageCrowSwarm
+        PATCH(0x5CFAA0 + 0xCD7, 0x90, 5); // CrowLand (ou UpdateCrowSwarm)
+    }
+    else if (m_config.DisableLockOn == 1)
+    {
+        PATCH(0x475EA0 + 0x273, 0x90, 5); // LOCK-ON
+    }
 
     Console::Printf("[CConfigs] Config parsing complete!");
     return 0;
