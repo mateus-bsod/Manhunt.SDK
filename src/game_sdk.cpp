@@ -12,14 +12,17 @@
 
 int MyExceptionFilter(EXCEPTION_POINTERS* ep)
 {
-    Console::Printf("Code: %08X",
+    printf("Code: %08X\n",
         ep->ExceptionRecord->ExceptionCode);
 
-    Console::Printf("EIP: %08X",
+    printf("EIP: %08X\n",
         ep->ContextRecord->Eip);
 
     return EXCEPTION_EXECUTE_HANDLER;
 }
+
+// --------------------------------------------------------------------------------
+
 
 // --------------------------------------------------------------------------------
 

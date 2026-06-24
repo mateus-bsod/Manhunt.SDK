@@ -19,6 +19,68 @@
     VirtualProtect((PVOID)(addr), size, old, &old); \
 } while(0)
 
+template<typename T>
+inline void JUMP(uintptr_t address, T destination)
+{
+    DWORD oldProtect;
+
+    VirtualProtect(
+        (LPVOID)address,
+        5,
+        PAGE_EXECUTE_READWRITE,
+        &oldProtect);
+
+    *(uint8_t*)address = 0xE9;
+
+    *(int32_t*)(address + 1) =
+        (int32_t)(
+            (uintptr_t)destination -
+            address -
+            5);
+
+    FlushInstructionCache(
+        GetCurrentProcess(),
+        (LPCVOID)address,
+        5);
+
+    VirtualProtect(
+        (LPVOID)address,
+        5,
+        oldProtect,
+        &oldProtect);
+}
+
+template<typename T>
+inline void CALL(uintptr_t address, T destination)
+{
+    DWORD oldProtect;
+
+    VirtualProtect(
+        (LPVOID)address,
+        5,
+        PAGE_EXECUTE_READWRITE,
+        &oldProtect);
+
+    *(uint8_t*)address = 0xE8;
+
+    *(int32_t*)(address + 1) =
+        (int32_t)(
+            (uintptr_t)destination -
+            address -
+            5);
+
+    FlushInstructionCache(
+        GetCurrentProcess(),
+        (LPCVOID)address,
+        5);
+
+    VirtualProtect(
+        (LPVOID)address,
+        5,
+        oldProtect,
+        &oldProtect);
+}
+
 //
 
 struct Vector {

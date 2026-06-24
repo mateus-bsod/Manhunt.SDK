@@ -11,9 +11,12 @@
 
 #include "manhunt/core/CConfigs.h"
 #include "manhunt/game/CPhysics.h"
+
 #include "manhunt/gameplay/CCollectable.h"
 #include "manhunt/gameplay/CInventory.h"
 #include "manhunt/gameplay/CWeapons.h"
+#include "manhunt/gameplay/CWeather.h"
+
 #include "manhunt/entity/CPlayer.h"
 #include "manhunt/ui/CMenu.h"
 #include "manhunt/ui/CText.h"
@@ -72,6 +75,7 @@ void InitHooks()
 
     CCollectable::InstallHook();
     CWeapon::InstallHook();
+	CWeather::InstallHook();
     CPlayer::InstallHook();
     CPhysics::InstallHook();
     CInventory::InstallHook();
