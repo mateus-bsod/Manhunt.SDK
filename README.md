@@ -11,9 +11,10 @@ Atualmente, todo o trabalho de pesquisa, mapeamento de estruturas internas e des
 A longo prazo, a ideia é transformar o projeto em uma plataforma completa para a comunidade de modding de Manhunt, incluindo documentação, ferramentas e um fórum dedicado para compartilhamento de conhecimento, projetos e recursos.
 
 # Agradecimentos
-- Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt). (RW .sig)
+- Thanks to [ermaccer](https://github.com/ermaccer) for [Manhunt.PluginMH](https://github.com/ermaccer/Manhunt.PluginMH)
+- Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt).
+- Thanks to [aap](https://github.com/aap) for [librw](https://github.com/aap/librw).
 <!-- - Thanks to [sigmaco](https://github.com/sigmaco) for [rwsdk](https://github.com/sigmaco/rwsdk-v3.7.0.2/tree/master). (RW SDK) -->
-Thanks to [aap](https://github.com/aap) for [librw](https://github.com/aap/librw).
 
 
 
