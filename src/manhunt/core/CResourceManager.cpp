@@ -566,6 +566,8 @@ int CResourceManager::hkResourceLoad()
     return 1;
 }
 
+
+
 void CResourceManager::InitializeResource(void* dest, const char* src)
 {
     Console::Printf("[ResourceLoader::InitializeResource] Initializing resource [%s]...", src);

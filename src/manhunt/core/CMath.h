@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include "../../framework.h"
+#include "../../../framework.h"
 #include "../../game.sdk.h"
 
 class CMath

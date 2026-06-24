@@ -12,6 +12,11 @@
 
 bool CInput::g_DialogThreadRunning = true;
 
+int CInput::IsKeyMenuInfoPressed()
+{
+    return *(int*)0x7C8F9C;
+}
+
 int CInput::IsUpKeyPressed()
 {
     return CallAndReturn<int, 0x5D8A10>();
@@ -54,7 +59,7 @@ void* CInput::GetLocalizedString(void* pStringId)
 
 int CInput::GetSelectedOptionFromMouse()
 {
-    return CallAndReturn<int, 0x5DAD00>();
+    return CallAndReturn<int, 0x5DACC0>();
 }
 
 void CInput::ResetMenuState()

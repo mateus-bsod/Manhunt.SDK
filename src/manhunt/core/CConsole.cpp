@@ -52,12 +52,12 @@ void Console::Print(const char* text)
 
 void Console::Printf(const char* format, ...)
 {
-    char buffer[256];
+    char buffer[300];
     va_list args;
     va_start(args, format);
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
-    Print(buffer);
+    Console::Print(buffer);
 }
 
 void Console::AddToHistory(const char* cmd)
@@ -68,49 +68,21 @@ void Console::AddToHistory(const char* cmd)
     m_historyCount++;
 }
 
+
 void Console::ProcessCommand(const char* cmd)
 {
     char result[256] = "";
-
-    if (strcmp(cmd, "god") == 0)
-    {
-        sprintf(result, "[GOD] God mode ON");
-    }
-    else if (strcmp(cmd, "ungod") == 0)
-    {
-        sprintf(result, "[GOD] God mode OFF");
-    }
-    else if (strcmp(cmd, "allweapons") == 0)
-    {
-        sprintf(result, "[WEAPONS] All weapons given");
-    }
-    else if (strcmp(cmd, "health") == 0)
-    {
-        sprintf(result, "[HEALTH] Health restored to 100");
-    }
-    else if (strcmp(cmd, "clear") == 0)
+    
+    if (strcmp(cmd, "clear") == 0)
     {
         m_logCount = 0;
         m_scrollOffset = 0;
         m_displayOffset = 0;
         sprintf(result, "[CONSOLE] Cleared");
     }
-    else if (strcmp(cmd, "help") == 0)
-    {
-        Print("[HELP] Available commands:");
-        Print("  god - Enable god mode");
-        Print("  ungod - Disable god mode");
-        Print("  allweapons - Get all weapons");
-        Print("  health - Restore health to 100");
-        Print("  clear - Clear console");
-        Print("  close - Close console");
-        Print("  help - Show this help");
-        return;
-    }
     else if (strcmp(cmd, "close") == 0)
     {
         m_open = false;
-        sprintf(result, "[CONSOLE] Closed");
     }
     else if (strlen(cmd) > 0)
     {

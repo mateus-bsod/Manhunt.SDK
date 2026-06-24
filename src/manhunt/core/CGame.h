@@ -11,6 +11,11 @@
 
 #include "../../game.sdk.h"
 #include "../../../framework.h"
+#include "../sdk/FakeRW.h"
+#include "CConfigs.h"
+
+extern RpLight* ms_pMenuLight;
+
 
 class CGame
 {
@@ -40,6 +45,8 @@ public:
     static int Game_IsInGame();
     static int Game_IsPaused();
     static int WorldToScreen(DWORD outScreen, float worldX, float worldZ);
+
+    static int Set2DRenderMode(int mode);
 
     static int __cdecl hkEventHandler(int a1, int a2);
 

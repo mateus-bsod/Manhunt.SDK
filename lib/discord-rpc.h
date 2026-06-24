@@ -2,6 +2,7 @@
 #include <stdint.h>
 
 // clang-format off
+#pragma comment(lib, "discord-rpc.lib")
 
 #if defined(DISCORD_DYNAMIC_LIB)
 #  if defined(_WIN32)

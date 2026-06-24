@@ -21,6 +21,7 @@ private:
     static bool g_DialogThreadRunning;
 
 public:
+    static int IsKeyMenuInfoPressed();
     static int IsUpKeyPressed();
     static int IsDownKeyPressed();
     static int IsConfirmKeyPressed();

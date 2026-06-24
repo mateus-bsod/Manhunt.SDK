@@ -5,7 +5,7 @@
 #include "../entity/CPlayer.h"
 #include "../../../framework.h"
 
-#pragma comment(lib, "../../../lib/discord-rpc.lib")
+//#pragma comment(lib, "../../../lib/discord-rpc.lib")
 
 
 #define APPLICATION_ID "1516982274674004178"

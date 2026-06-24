@@ -25,6 +25,9 @@ SafetyHookInline CGame::g_HUD_Draw;
 CGame::tLoadingScreen CGame::oLoadingScreen = nullptr;
 SafetyHookInline CGame::g_LoadingScreen;
 
+RpLight* ms_pMenuLight = nullptr;
+
+
 int CGame::Game_IsInGame()
 {
     return CallAndReturn<int, 0x5EA4E0>();
@@ -43,6 +46,11 @@ int CGame::WorldToScreen(DWORD outScreen, float worldX, float worldZ)
 void CGame::InitialiseWorld(int missionId)
 {
     Call<0x474330, int>(missionId);
+}
+
+int CGame::Set2DRenderMode(int mode)
+{
+   return CallAndReturn<int, 0x5F5A80, int>(mode);
 }
 
 int __cdecl CGame::hkEventHandler(int a1, int a2)
@@ -79,8 +87,31 @@ void CGame::LoadingScreen()
     oLoadingScreen();
 }
 
+SafetyHookMid g_InitialiseRenderWare;
+
+void HookInitialiseRenderWare(SafetyHookContext& ctx)
+{
+    /*
+    if (CConfigs::m_config.RatsAndCrows) // disable
+    {
+        DWORD func = 0x4D7AC0;
+        __asm {
+            call func
+        }
+    }
+    */
+
+}
+
 void CGame::InstallHook()
 {
+    //PATCH(0x004D7A73, 0x90, 5); // .text:004D7A73                 call    RenderPreviewWithRatAndCrowTextures
+    g_InitialiseRenderWare = safetyhook::create_mid(
+        (void*)0x004D7A73,
+        HookInitialiseRenderWare
+    );
+
+
     while (true)
     {
         DWORD p = *(DWORD*)0x82279C;

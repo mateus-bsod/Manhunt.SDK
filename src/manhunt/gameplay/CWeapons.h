@@ -156,6 +156,14 @@ struct CWeaponSlots
     DWORD dwSlot3;
     DWORD dwSlot4;
 };
+
+struct CWeaponRange { // tests
+    float minRange;     // 0x69A5AC - Alcance mínimo
+    float maxRange;     // 0x69A5B0 - Alcance máximo
+};
+#define g_WeaponRange (*(CWeaponRange*)0x69A5AC)
+
+
 #pragma pack(pop)
 
 typedef char(__thiscall* tWeaponParse)(void* pThis, void* property);
