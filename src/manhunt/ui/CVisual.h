@@ -58,10 +58,11 @@ public:
     static void UI_PlaySound(int soundId, int channel, float volume);
     static int UI_IsVisible(int panelId);
     static int UI_End(int a1, int a2);
+    static int PrintCheat(wchar_t* text, int* unk2 = 0, int* unk3 = 0, int* unk4 = 0);
     static void DrawMenuString(wchar_t* text, float x, float y, int textScaleX, float textScaleY);
-    static void DrawImage(float posX, float posY, float scaleX, float scaleY, int red, int green, int blue, int alpha, int pTexture);
     static void DrawMenuItem(wchar_t* text, float x, float y, int textScaleX, float textScaleY, int selected);
     static void DrawMenuCameraCounter(const wchar_t* text);
+    static void DrawMenuInfo(wchar_t* button1, wchar_t* button2, wchar_t* button3, wchar_t* button4);
     static void DrawColoredQuad(float x, float y, float width, float height, int r, int g, int b, int a, int unknown);
     static void InstallHook();
 };

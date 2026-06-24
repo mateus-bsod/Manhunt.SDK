@@ -64,9 +64,9 @@ int CVisual::Load_Texture(int txd, const char* texture)
     return (int)((int* (__cdecl*)(int, const char*))0x62F660)(txd, texture);
 }
 
-void CVisual::DrawImage(float posX, float posY, float scaleX, float scaleY, int red, int green, int blue, int alpha, int pTexture)
+void CVisual::DrawMenuInfo(wchar_t* button1, wchar_t* button2, wchar_t* button3, wchar_t* button4)
 {
-    Call<0x5F96F0, float, float, float, float, int, int, int, int, int>(posX, posY, scaleX, scaleY, red, green, blue, alpha, pTexture);
+    Call<0x5D5BB0, wchar_t*, wchar_t*, wchar_t*, wchar_t*>(button1, button2, button3, button4);
 }
 
 void CVisual::DrawTextString(const char* text, float x, float y, float scaleX, float scaleY, int a6, int style, int a8)
