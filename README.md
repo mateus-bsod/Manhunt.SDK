@@ -6,10 +6,6 @@
 # MH.SDK
 The project aims to facilitate access to, and especially the development of mods for **Manhunt 1 (PC)**.
 
-Currently, all research, internal structure mapping, and development work is being carried out by me, with the aid of AI tools to accelerate the reverse engineering process and technical documentation.
-
-In the long term, the idea is to transform the project into a complete platform for the Manhunt modding community, including documentation, tools, and a dedicated forum for sharing knowledge, projects, and resources.
-
 # 
 - Thanks to [ermaccer](https://github.com/ermaccer) for [Manhunt.PluginMH](https://github.com/ermaccer/Manhunt.PluginMH)
 - Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt).
