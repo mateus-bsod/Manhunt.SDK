@@ -4,13 +4,13 @@
 
 
 # MH.SDK
-O projeto tem como objetivo facilitar o acesso e, principalmente, o desenvolvimento de MODs para **Manhunt 1 (PC)**.
+The project aims to facilitate access to, and especially the development of mods for **Manhunt 1 (PC)**.
 
-Atualmente, todo o trabalho de pesquisa, mapeamento de estruturas internas e desenvolvimento está sendo realizado por mim, com o auxílio de ferramentas de IA para acelerar o processo de engenharia reversa e documentação técnica.
+Currently, all research, internal structure mapping, and development work is being carried out by me, with the aid of AI tools to accelerate the reverse engineering process and technical documentation.
 
-A longo prazo, a ideia é transformar o projeto em uma plataforma completa para a comunidade de modding de Manhunt, incluindo documentação, ferramentas e um fórum dedicado para compartilhamento de conhecimento, projetos e recursos.
+In the long term, the idea is to transform the project into a complete platform for the Manhunt modding community, including documentation, tools, and a dedicated forum for sharing knowledge, projects, and resources.
 
-# Agradecimentos
+# 
 - Thanks to [ermaccer](https://github.com/ermaccer) for [Manhunt.PluginMH](https://github.com/ermaccer/Manhunt.PluginMH)
 - Thanks to [ifarbod](https://github.com/ifarbod) for [renderware 3-flirt](https://github.com/ifarbod/renderware3-flirt).
 - Thanks to [aap](https://github.com/aap) for [librw](https://github.com/aap/librw).
@@ -20,11 +20,11 @@ A longo prazo, a ideia é transformar o projeto em uma plataforma completa para 
 
 #
 
-##### Se você gostou da proposta, pode conferir a documentação atual do projeto aqui:
+##### If you liked the proposal, you can check out the current project documentation here (a website with the script documentation in Lua code will be available in the future).:
 
 <p align="center">
 https://github.com/mateus-bsod/MH.ModLoader/wiki
 </p>
 
 
-###### A documentação ainda está em desenvolvimento. Neste momento, o foco principal está na implementação de novas funcionalidades e na expansão da base técnica do Mod Loader. Conforme o projeto amadurecer, mais conteúdo, exemplos e tutoriais serão adicionados.
+###### The documentation is still under development. At this time, the main focus is on implementing new features and expanding the technical base of Mod Loader. As the project matures, more content, examples, and tutorials will be added.
