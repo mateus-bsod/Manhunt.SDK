@@ -16,6 +16,8 @@
 #include "../game/CInput.h"
 #include "../ui/CText.h"
 #include "../../game.sdk.h"
+#include "../game/CCheats.h"
+
 
 #define MAIN_MENU_ADDR         0x600C20
 #define PAUSE_MENU_HANDLER_ADDR 0x601010
@@ -30,6 +32,8 @@ extern int& lastSelectedItem;
 extern int& selectedItemIndex;
 extern int& selectedOption;
 extern int& menu_mouse_in_area;
+
+extern int& CurrentPlayerMenu;
 
 extern DWORD& g_MenuOption;
 

@@ -133,9 +133,8 @@ void* __cdecl CMainMenu::hkMainMenu()
     CVisual::DrawMenuItem(CText::GetKey("QUITPRG"), x, baseY + (step * 5), v0, v1, selected == 5);
     CVisual::DrawMenuItem(L"SKINS", x, baseY + (step * 7), v0, v1, selected == 6);
 
-    int cheatFlag = *(int*)0x7C84A8;
+    /*
     wchar_t* cheatText = (wchar_t*)0x7D6360;
-
     if (cheatFlag) {
         switch (cheatFlag) {
         case 1: cheatText = CText::GetKey("C_RUN"); break;
@@ -152,9 +151,13 @@ void* __cdecl CMainMenu::hkMainMenu()
         }
     }
 
-    if (*(int*)0x7C84AC == 1) {
+    if (m_cheatsActive == 1) {
         CVisual::DrawMenuInfo(cheatText, (wchar_t*)0x7D6360, (wchar_t*)0x7D6360, (wchar_t*)0x7D6360);
     }
+    */
+    CCheat::DrawActiveCheats();
+
+    //
 
     return (void*)0x7D6360;
 }
@@ -183,7 +186,7 @@ int __cdecl CMainMenu::hkMainMenuHandler()
     if (CInput::IsUpKeyPressed())
     {
         if (--g_MenuOption < 0)
-            g_MenuOption = (g_MaxMenuOptions-1);
+            g_MenuOption = (g_MaxMenuOptions - 1);
     }
     if (CInput::IsDownKeyPressed())
     {
@@ -356,8 +359,8 @@ SafetyHookInline g_ModLoaderHook;
 
 void HookExecuteMenuProcess(SafetyHookContext& ctx)
 {
-	if (CurrentPlayerMenu == MENU_SKINS) // SKINS
-	{
+    if (CurrentPlayerMenu == MENU_SKINS) // SKINS
+    {
         CSkinSelector::SkinSelectorMenu();
         CSkinSelector::SkinSelectorMenuHandler();
     }
