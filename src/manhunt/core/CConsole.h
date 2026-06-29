@@ -4,6 +4,8 @@
 #include "../../../framework.h"
 #include "../../game.sdk.h"
 
+#include "../gameplay/CCamera.h"
+
 class Console
 {
 private:

@@ -72,21 +72,80 @@ void Console::AddToHistory(const char* cmd)
 void Console::ProcessCommand(const char* cmd)
 {
     char result[256] = "";
+    char command[64] = "";
+    char param[128] = "";
+
+    const char* space = strchr(cmd, ' ');
+    if (space) {
+        size_t cmdLen = space - cmd;
+        if (cmdLen < sizeof(command)) {
+            strncpy(command, cmd, cmdLen);
+            command[cmdLen] = '\0';
+        }
+        strcpy(param, space + 1); 
+    }
+    else {
+        strcpy(command, cmd);
+        param[0] = '\0';
+    }
     
-    if (strcmp(cmd, "clear") == 0)
+    // -----------------
+
+
+
+    if (strcmp(command, "camera") == 0)
+    {
+		CCamera::ToggleCameraFlyMode(!g_CameraFlyMode);
+        m_open = false;
+    }
+
+    else if (strcmp(command, "camera_speed") == 0)
+    {
+        if (param[0] == '\0') {
+            sprintf(result, "[ERROR] Usage: camera_speed <value>");
+        }
+        else {
+            float speed = (float)atof(param);
+            if (speed > 0.0f) {
+                CCamera::SetCameraFlySpeed(speed);
+                sprintf(result, "[CAMERA] Speed set to: %.2f", speed);
+            }
+            else {
+                sprintf(result, "[ERROR] Invalid speed: %s", param);
+            }
+        }
+    }
+
+    else if (strcmp(command, "camera_sensi") == 0)
+    {
+        if (param[0] == '\0') {
+            sprintf(result, "[ERROR] Usage: camera_sensi <value>");
+        }
+        else {
+            float speed = (float)atof(param);
+            if (speed > 0) {
+                CCamera::SetCameraFlySensitivity(speed);
+                sprintf(result, "[CAMERA] sensitivity set to: %.2f", speed);
+            }
+            else {
+                sprintf(result, "[ERROR] Invalid sensitivity: %s", param);
+            }
+        }
+    }
+    else if (strcmp(command, "clear") == 0)
     {
         m_logCount = 0;
         m_scrollOffset = 0;
         m_displayOffset = 0;
         sprintf(result, "[CONSOLE] Cleared");
     }
-    else if (strcmp(cmd, "close") == 0)
+    else if (strcmp(command, "close") == 0)
     {
         m_open = false;
     }
-    else if (strlen(cmd) > 0)
+    else if (strlen(command) > 0)
     {
-        sprintf(result, "[ERROR] Unknown command: %s", cmd);
+        sprintf(result, "[ERROR] Unknown command: %s", command);
     }
 
     if (result[0] != 0)
