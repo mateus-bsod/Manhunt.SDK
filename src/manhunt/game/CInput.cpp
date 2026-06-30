@@ -14,6 +14,10 @@ bool CInput::g_DialogThreadRunning = true;
 void CInput::TogglePlayerInput(bool state)
 {
 	*(int*)0x725710 = state ? 1 : 0;
+    if (!state)
+    {
+        Call< 0x47DFB0 >();
+    }
 }
 
 bool CInput::GetStatePlayerInput()
