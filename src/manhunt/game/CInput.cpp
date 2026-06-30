@@ -9,8 +9,17 @@
 
 #include "CInput.h"
 
-
 bool CInput::g_DialogThreadRunning = true;
+
+void CInput::TogglePlayerInput(bool state)
+{
+	*(int*)0x725710 = state ? 1 : 0;
+}
+
+bool CInput::GetStatePlayerInput()
+{
+    return *reinterpret_cast<int*>(0x725710);
+}
 
 int CInput::IsKeyMenuInfoPressed()
 {

@@ -20,7 +20,10 @@ class CInput
 private:
     static bool g_DialogThreadRunning;
 
-public:
+public: // a
+    static void TogglePlayerInput(bool state);
+    static bool GetStatePlayerInput();
+
     static int IsKeyMenuInfoPressed();
     static int IsUpKeyPressed();
     static int IsDownKeyPressed();
