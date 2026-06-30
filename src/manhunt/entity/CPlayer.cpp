@@ -9,6 +9,7 @@
 
 #include "CPlayer.h"
 
+int& CPlayer::g_CurrentMission = *reinterpret_cast<int*>(0x0075622);
 int& CPlayer::Player_State = *reinterpret_cast<int*>(0x7D34F8);
 
 void CPlayer::SetPlayerCameraMode(CAMERA_MODE mode)

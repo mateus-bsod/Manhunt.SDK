@@ -1036,6 +1036,8 @@ public:
 
 
     static int& Player_State;
+    static int& g_CurrentMission;
+
 
     static PLAYER_STATE GetPlayerState();
     static void SetPlayerCameraMode(CAMERA_MODE mode);
