@@ -230,5 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="README.md" />
+    <None Include="LICENSE" />
   </ItemGroup>
 </Project>

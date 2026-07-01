@@ -175,7 +175,6 @@
     <ClInclude Include="src\manhunt\game\CCheats.h" />
     <ClInclude Include="src\manhunt\game\CInput.h" />
     <ClInclude Include="src\manhunt\gameplay\CInventory.h" />
-    <ClInclude Include="src\manhunt\game\CScriptGame.h" />
     <ClInclude Include="src\manhunt\reverse\RenderWare.h" />
     <ClInclude Include="src\manhunt\sdk\FakeRW.h" />
     <ClInclude Include="src\manhunt\ui\CMainMenu.h" />
@@ -211,7 +210,6 @@
     <ClCompile Include="src\manhunt\game\CCheats.cpp" />
     <ClCompile Include="src\manhunt\game\CInput.cpp" />
     <ClCompile Include="src\manhunt\gameplay\CInventory.cpp" />
-    <ClCompile Include="src\manhunt\game\CScriptGame.cpp" />
     <ClCompile Include="src\manhunt\reverse\RenderWare.cpp" />
     <ClCompile Include="src\manhunt\sdk\FakeRW.cpp" />
     <ClCompile Include="src\manhunt\ui\CMainMenu.cpp" />
@@ -231,6 +229,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

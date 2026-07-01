@@ -24,7 +24,6 @@
 
 #include "manhunt/game/CCheats.h"
 #include "manhunt/game/CInput.h"
-#include "manhunt/game/CScriptGame.h"
 
 #include "manhunt/ui/CMainMenu.h"
 #include "manhunt/core/CGame.h"
@@ -78,7 +77,6 @@ void InitHooks()
     CResourceManager::InstallHook();
     CGame::InstallHook();
 
-    CScriptGame::InstallHooks();
     CCollectable::InstallHook();
     CWeapon::InstallHook();
 	CWeather::InstallHook();
