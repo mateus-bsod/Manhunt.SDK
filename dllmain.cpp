@@ -59,6 +59,8 @@ sub_5EA2C0	IsPlayerInCover
 
 ----
 
+7C9E58 - g_PlayerHUD_Radar
+
 4BBCF0 - ToggleFullBright (funcao)
 
 */
@@ -94,8 +96,6 @@ sub_5EA2C0	IsPlayerInCover
 #include "src/manhunt/core/CGame.h"    
 #include "src/manhunt/game/CInput.h"    
 #include "src/manhunt/entity/CEntity.h"    
-//#include "src/manhunt/core/script/ScriptSystem.h"    
-
 
 #include "./src/hooks.h"
 
@@ -176,10 +176,6 @@ DWORD WINAPI MainThread(LPVOID)
     CreateDirectoryA("Manhunt.SDK", NULL);
     CreateDirectoryA("Manhunt.SDK/skins", NULL);
 
-    // Disable neblina
-    //PATCH(0x4E9110 + 0xDD, 0x90, 5); // particulas de neblina
-    //PATCH(0x475EA0 + 0x25F, 0x90, 5); // particulas de neblina
-    // // PATCH(0x4F2F10 + 0x5B2, 0x90, 5); // particulas de neblina
     InitHooks();
 
     Console::Init();
@@ -187,7 +183,6 @@ DWORD WINAPI MainThread(LPVOID)
 
     //Sleep(25000);
     //DeleteAllHunters();
-    //CScriptSystem::CScriptSystem();
     return 0;
 }
 

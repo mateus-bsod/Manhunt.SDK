@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ad3a6e37-4ef7-49c1-82d0-5d291a11a008}</ProjectGuid>
+    <RootNamespace>manhunt</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>C:\Users\mateus-bsod\Desktop\MANHUNT</OutDir>
+    <TargetName>Manhunt.SDK</TargetName>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\rwsrc-v3.7.0.2-master\misc\inc;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);C:\rwsrc-v3.7.0.2-master\misc\lib</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;MANHUNT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;MANHUNT_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>C:\librw-master\src</AdditionalIncludeDirectories>
+      <Optimization>MaxSpeed</Optimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <FixedBaseAddress>false</FixedBaseAddress>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;MANHUNT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;MANHUNT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="lib\discord-rpc.h" />
+    <ClInclude Include="lib\safetyhook.hpp" />
+    <ClInclude Include="lib\Zydis\Zydis.h" />
+    <ClInclude Include="src\game.sdk.h" />
+    <ClInclude Include="src\manhunt\core\CConfigs.h" />
+    <ClInclude Include="src\manhunt\core\CConsole.h" />
+    <ClInclude Include="src\manhunt\core\CDiscord.h" />
+    <ClInclude Include="src\manhunt\core\CMath.h" />
+    <ClInclude Include="src\manhunt\core\script\CSkinSelector.h" />
+    <ClInclude Include="src\manhunt\gameplay\CCamera.h" />
+    <ClInclude Include="src\manhunt\gameplay\CDebug.h" />
+    <ClInclude Include="src\manhunt\entity\CCharacter.h" />
+    <ClInclude Include="src\manhunt\gameplay\CCollectable.h" />
+    <ClInclude Include="src\manhunt\entity\CEntity.h" />
+    <ClInclude Include="src\manhunt\core\CGame.h" />
+    <ClInclude Include="src\manhunt\gameplay\CParticles.h" />
+    <ClInclude Include="src\manhunt\gameplay\CWeather.h" />
+    <ClInclude Include="src\manhunt\game\CCheats.h" />
+    <ClInclude Include="src\manhunt\game\CInput.h" />
+    <ClInclude Include="src\manhunt\gameplay\CInventory.h" />
+    <ClInclude Include="src\manhunt\game\CScriptGame.h" />
+    <ClInclude Include="src\manhunt\reverse\RenderWare.h" />
+    <ClInclude Include="src\manhunt\sdk\FakeRW.h" />
+    <ClInclude Include="src\manhunt\ui\CMainMenu.h" />
+    <ClInclude Include="src\manhunt\ui\CMenu.h" />
+    <ClInclude Include="src\manhunt\game\CModel.h" />
+    <ClInclude Include="src\manhunt\game\CPhysics.h" />
+    <ClInclude Include="src\manhunt\entity\CPlayer.h" />
+    <ClInclude Include="src\manhunt\core\CResourceManager.h" />
+    <ClInclude Include="src\manhunt\ui\CText.h" />
+    <ClInclude Include="src\manhunt\ui\CVisual.h" />
+    <ClInclude Include="src\manhunt\gameplay\CWeapons.h" />
+    <ClInclude Include="src\manhunt\game\CWorld.h" />
+    <ClInclude Include="src\hooks.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="lib\safetyhook.cpp" />
+    <ClCompile Include="lib\Zydis\Zydis.c" />
+    <ClCompile Include="src\game_sdk.cpp" />
+    <ClCompile Include="src\manhunt\core\CConfigs.cpp" />
+    <ClCompile Include="src\manhunt\core\CConsole.cpp" />
+    <ClCompile Include="src\manhunt\core\CDiscord.cpp" />
+    <ClCompile Include="src\manhunt\core\CMath.cpp" />
+    <ClCompile Include="src\manhunt\core\script\CSkinSelector.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CDebug.cpp" />
+    <ClCompile Include="src\manhunt\entity\CCharacter.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CCollectable.cpp" />
+    <ClCompile Include="src\manhunt\entity\CEntity.cpp" />
+    <ClCompile Include="src\manhunt\core\CGame.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CParticles.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CWeather.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CCamera.cpp" />
+    <ClCompile Include="src\manhunt\game\CCheats.cpp" />
+    <ClCompile Include="src\manhunt\game\CInput.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CInventory.cpp" />
+    <ClCompile Include="src\manhunt\game\CScriptGame.cpp" />
+    <ClCompile Include="src\manhunt\reverse\RenderWare.cpp" />
+    <ClCompile Include="src\manhunt\sdk\FakeRW.cpp" />
+    <ClCompile Include="src\manhunt\ui\CMainMenu.cpp" />
+    <ClCompile Include="src\manhunt\ui\CMenu.cpp" />
+    <ClCompile Include="src\manhunt\game\CModel.cpp" />
+    <ClCompile Include="src\manhunt\game\CPhysics.cpp" />
+    <ClCompile Include="src\manhunt\entity\CPlayer.cpp" />
+    <ClCompile Include="src\manhunt\core\CResourceManager.cpp" />
+    <ClCompile Include="src\manhunt\ui\CText.cpp" />
+    <ClCompile Include="src\manhunt\ui\CVisual.cpp" />
+    <ClCompile Include="src\manhunt\game\CWorld.cpp" />
+    <ClCompile Include="src\hooks.cpp" />
+    <ClCompile Include="src\manhunt\gameplay\CWeapons.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\discord-rpc.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

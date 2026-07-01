@@ -54,3 +54,11 @@ void ClearConsole()
 
     SetConsoleCursorPosition(hConsole, { 0, 0 });
 }
+
+void PATCH_DATA(DWORD addr, BYTE* data, size_t size) 
+{
+    DWORD oldProtect;
+    VirtualProtect((LPVOID)addr, size, PAGE_EXECUTE_READWRITE, &oldProtect);
+    memcpy((LPVOID)addr, data, size);
+    VirtualProtect((LPVOID)addr, size, oldProtect, &oldProtect);
+}

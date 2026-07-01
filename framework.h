@@ -1,8 +1,6 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN            
-#define _CRT_SECURE_NO_WARNINGS 
-
 #define MANHUNT_SDK_VERSION "1.0.0"
 
 #include <Windows.h>
@@ -12,6 +10,10 @@
 #include <vector>
 #include <string>
 #include <cstdarg>
+
+// script
+#include <map>
+#include <functional>
 
 // CInput
 #include <thread>

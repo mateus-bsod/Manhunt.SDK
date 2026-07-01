@@ -10,7 +10,11 @@
 #pragma once
 #include "../framework.h"
 
+#define NAKED __declspec(naked)
+
 #define EXCEPTION_SDK ( MyExceptionFilter(GetExceptionInformation()) )
+
+void PATCH_DATA(DWORD addr, BYTE* data, size_t size);
 
 #define PATCH(addr, value, size) do { \
     DWORD old; \

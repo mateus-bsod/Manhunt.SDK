@@ -16,11 +16,16 @@
 #include "manhunt/gameplay/CInventory.h"
 #include "manhunt/gameplay/CWeapons.h"
 #include "manhunt/gameplay/CWeather.h"
+#include "manhunt/gameplay/CCamera.h"
 
 #include "manhunt/entity/CPlayer.h"
 #include "manhunt/ui/CMenu.h"
 #include "manhunt/ui/CText.h"
+
+#include "manhunt/game/CCheats.h"
 #include "manhunt/game/CInput.h"
+#include "manhunt/game/CScriptGame.h"
+
 #include "manhunt/ui/CMainMenu.h"
 #include "manhunt/core/CGame.h"
 #include "manhunt/core/CResourceManager.h"
@@ -73,12 +78,15 @@ void InitHooks()
     CResourceManager::InstallHook();
     CGame::InstallHook();
 
+    CScriptGame::InstallHooks();
     CCollectable::InstallHook();
     CWeapon::InstallHook();
 	CWeather::InstallHook();
     CPlayer::InstallHook();
     CPhysics::InstallHook();
+    CCheat::InstallHook();
     CInventory::InstallHook();
+    CCamera::InstallHook();
     CMenu::InstallHook();
     CMainMenu::InstallHook();
     CVisual::InstallHook();
