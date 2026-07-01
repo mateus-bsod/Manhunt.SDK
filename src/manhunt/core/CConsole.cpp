@@ -68,6 +68,7 @@ void Console::AddToHistory(const char* cmd)
     m_historyCount++;
 }
 
+BYTE debug_menu = 0;
 
 void Console::ProcessCommand(const char* cmd)
 {
@@ -91,7 +92,12 @@ void Console::ProcessCommand(const char* cmd)
     
     // -----------------
 
-
+    if (strcmp(command, "debug") == 0)
+    {
+        debug_menu = ~debug_menu;
+        *(DWORD*)0x7CF088 = debug_menu;
+        m_open = false;
+    }
 
     if (strcmp(command, "camera") == 0)
     {
