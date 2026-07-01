@@ -11,8 +11,26 @@
 
 DWORD* CEntity::m_EntityList = (DWORD*)(0x69BBEC);
 
+
+// no use / crash
+int CEntity::Show()
+{
+    if (!this->IsValidEntity())
+        return 0;
+    return CallAndReturn<int, 0x482300, CEntity*, int>(this, 1);
+}
+
+// kill entity
+int CEntity::Hide()
+{
+    if (!this->IsValidEntity())
+        return 0;
+    return CallAndReturn<int, 0x482300, CEntity*, int>(this, 0);
+}
+
 void CEntity::Shutdown()
 {
+
     DWORD func = 0x437710;
     __asm call func
 }
@@ -40,21 +58,22 @@ void CEntity::InitEntity(int* config)
 
 bool CEntity::IsValidEntity()
 {
-    return CallAndReturn<bool, 0x431AE0, CEntity*>(this);
+    return CallAndReturn<bool, 0x004817E0, CEntity*>(this);
 }
 
 bool CEntity::IsEntityDead()
 {
-    DWORD func = 0x424090;
-    __asm
-    {
-        mov ecx, this
-        call func
-    }
+    if (!this->IsValidEntity())
+        return false;
+    // ...
+    return true;
 }
 
 void CEntity::SetEntityHealth(int health)
 {
+    if (!this->IsValidEntity())
+        return;
+
     DWORD func = 0x4A3EE0;
     __asm
     {
@@ -68,6 +87,9 @@ void CEntity::SetEntityHealth(int health)
 
 void CEntity::SetEntityInvincible(bool invincible)
 {
+    if (!this->IsValidEntity())
+        return;
+
     DWORD func = 0x4B2580;
     DWORD inv = invincible ? 1 : 0;
     __asm
@@ -81,6 +103,9 @@ void CEntity::SetEntityInvincible(bool invincible)
 
 void CEntity::SetEntityAnimation(int start, int end, char value)
 {
+    if (!this->IsValidEntity())
+        return;
+
     DWORD func = 0x5A96B0;
     __asm
     {
@@ -96,6 +121,9 @@ void CEntity::SetEntityAnimation(int start, int end, char value)
 
 DWORD CEntity::GetEntityMatrix() // falta terminar
 {
+    if (!this->IsValidEntity())
+        return 0;
+
     DWORD func = 0x4313B0;
     __asm
     {
@@ -103,20 +131,30 @@ DWORD CEntity::GetEntityMatrix() // falta terminar
         call func
     }
     //Call<0x4313B0, CEntity*>(this);
+    return 1;
 }
 
 void CEntity::ClearCurrentEntity(int value)
 {
+    if (!this->IsValidEntity())
+        return;
+
     Call<0x4AC1B0, CEntity*, int>(this, value);
 }
 
 void CEntity::DestroyEntity()
 {
+    if (!this->IsValidEntity())
+        return;
+
     Call<0x4813B0, CEntity*>(this);
 }
 
 void CEntity::RemoveHunter()
 {
+    if (!this->IsValidEntity())
+        return;
+
     DWORD func = 0x4EDA30;
     __asm
     {
@@ -127,102 +165,132 @@ void CEntity::RemoveHunter()
 
 bool CEntity::IsHunter()
 {
-    __asm
+    if (this->IsValidEntity())
     {
-        mov ecx, this
-        mov eax, [ecx + 0x7C]
-        mov edx, [eax + 4]
-        and edx, 0x1F
-        cmp edx, 31
-        setz al
-        movzx eax, al
+        __asm
+        {
+            mov ecx, this
+            mov eax, [ecx + 0x7C]
+            mov edx, [eax + 4]
+            and edx, 0x1F
+            cmp edx, 31
+            setz al
+            movzx eax, al
+        }
     }
 }
 
 void CEntity::SetPosition(float x, float y, float z)
 {
-    Vector* pos = this->GetEntityPosition();
-    if (pos)
+    if (this->IsValidEntity())
     {
-        pos->x = x;
-        pos->y = y;
-        pos->z = z;
+        Vector* pos = this->GetEntityPosition();
+        if (pos)
+        {
+            pos->x = x;
+            pos->y = y;
+            pos->z = z;
+        }
     }
 }
 
 void CEntity::SetRotation(float rx, float ry, float rz)
 {
-    Vector* rot = this->GetEntityRotation();
-    if (rot)
+    if (this->IsValidEntity())
     {
-        rot->x = rx;
-        rot->y = ry;
-        rot->z = rz;
+        Vector* rot = this->GetEntityRotation();
+        if (rot)
+        {
+            rot->x = rx;
+            rot->y = ry;
+            rot->z = rz;
+        }
     }
 }
 
 Vector* CEntity::GetEntityPosition()
 {
-    __asm
+    if (this->IsValidEntity())
     {
-        mov     ecx, this
-        mov     eax, [ecx + 0x80]
-        mov     eax, [eax + 0x4]
-        add     eax, 0x40
+        __asm
+        {
+            mov     ecx, this
+            mov     eax, [ecx + 0x80]
+            mov     eax, [eax + 0x4]
+            add     eax, 0x40
+        }
     }
 }
 
 Vector* CEntity::GetEntityRotation()
 {
-    __asm
+    if (this->IsValidEntity())
     {
-        mov     ecx, this
-        mov     eax, [ecx + 0x80]
-        mov     eax, [eax + 0x4]
-        add     eax, 0x10
+        __asm
+        {
+            mov     ecx, this
+            mov     eax, [ecx + 0x80]
+            mov     eax, [eax + 0x4]
+            add     eax, 0x10
+        }
     }
 }
 
 Vector* CEntity::GetEntityBoundingBoxMin()
 {
-    __asm
+    if (this->IsValidEntity())
     {
-        mov     ecx, this
-        mov     eax, [ecx + 0x80]
-        mov     eax, [eax + 0x4]
-        add     eax, 0x30
+        __asm
+        {
+            mov     ecx, this
+            mov     eax, [ecx + 0x80]
+            mov     eax, [eax + 0x4]
+            add     eax, 0x30
+        }
     }
 }
 
 Vector* CEntity::GetEntityBoundingBoxMax()
 {
-    __asm
+    if (this->IsValidEntity())
     {
-        mov     ecx, this
-        mov     eax, [ecx + 0x80]
-        mov     eax, [eax + 0x4]
-        add     eax, 0x20
+        __asm
+        {
+            mov     ecx, this
+            mov     eax, [ecx + 0x80]
+            mov     eax, [eax + 0x4]
+            add     eax, 0x20
+        }
     }
+
 }
 
 
 
 float CEntity::GetEntityHealthPercent()
 {
+    if (!this->IsValidEntity())
+        return 0.0;
+
     DWORD func = 0x5E78A0;
     __asm
     {
         mov ecx, this
         call func
     }
+    return 1;
 }
 
 int CEntity::GetEntityMaxHealth()
 {
+    if (!this->IsValidEntity())
+        return;
+
     DWORD func = 0x5E7890;
     __asm
     {
         mov ecx, this
         call func
     }
+    return 1;
 }
