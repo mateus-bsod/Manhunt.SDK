@@ -94,8 +94,8 @@ void Console::ProcessCommand(const char* cmd)
 
     if (strcmp(command, "debug") == 0)
     {
-        debug_menu = ~debug_menu;
         *(DWORD*)0x7CF088 = debug_menu;
+        debug_menu = ~debug_menu;
         m_open = false;
     }
 
