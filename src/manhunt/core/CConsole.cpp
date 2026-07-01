@@ -99,10 +99,10 @@ void Console::ProcessCommand(const char* cmd)
         m_open = false;
     }
 
-    else if (strcmp(command, "camera_speed") == 0)
+    else if (strcmp(command, "cameraspeed") == 0)
     {
         if (param[0] == '\0') {
-            sprintf(result, "[ERROR] Usage: camera_speed <value>");
+            sprintf(result, "[ERROR] Usage: cameraspeed <value>");
         }
         else {
             float speed = (float)atof(param);
@@ -116,10 +116,10 @@ void Console::ProcessCommand(const char* cmd)
         }
     }
 
-    else if (strcmp(command, "camera_sensi") == 0)
+    else if (strcmp(command, "camerasensi") == 0)
     {
         if (param[0] == '\0') {
-            sprintf(result, "[ERROR] Usage: camera_sensi <value>");
+            sprintf(result, "[ERROR] Usage: camerasensi <value>");
         }
         else {
             float speed = (float)atof(param);
