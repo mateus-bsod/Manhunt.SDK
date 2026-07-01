@@ -10,6 +10,8 @@
 #include "../gameplay/CWeapons.h"
 #include "../entity/CPlayer.h"
 
+int& g_CurrentSlot = *reinterpret_cast<int*>(0x7C9CD0);
+
 tWeaponParse CWeapon::oWeaponParse = nullptr;
 SafetyHookInline CWeapon::g_WeaponParseHook;
 

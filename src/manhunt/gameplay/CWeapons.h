@@ -166,6 +166,8 @@ struct CWeaponRange { // tests
 
 #pragma pack(pop)
 
+extern int& g_CurrentSlot;
+
 typedef char(__thiscall* tWeaponParse)(void* pThis, void* property);
 
 class CWeapon
