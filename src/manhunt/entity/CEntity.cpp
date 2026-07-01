@@ -265,32 +265,3 @@ Vector* CEntity::GetEntityBoundingBoxMax()
 
 }
 
-
-
-float CEntity::GetEntityHealthPercent()
-{
-    if (!this->IsValidEntity())
-        return 0.0;
-
-    DWORD func = 0x5E78A0;
-    __asm
-    {
-        mov ecx, this
-        call func
-    }
-    return 1;
-}
-
-int CEntity::GetEntityMaxHealth()
-{
-    if (!this->IsValidEntity())
-        return;
-
-    DWORD func = 0x5E7890;
-    __asm
-    {
-        mov ecx, this
-        call func
-    }
-    return 1;
-}

@@ -40,8 +40,6 @@ public:
     Vector* GetEntityBoundingBoxMin();
     Vector* GetEntityBoundingBoxMax();
     int DeleteAllHunters();
-    float GetEntityHealthPercent();
-    int GetEntityMaxHealth();
 
     int Show();
     int Hide();
